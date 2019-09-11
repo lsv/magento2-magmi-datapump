@@ -1,0 +1,52 @@
+{
+    "name": "lsv/magento2-magmi-dump",
+    "description": "Magmi datapump API for Magento 2",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Aarhof",
+            "email": "martin.aarhof@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "magmi_loader.php"
+        ],
+        "psr-4": {
+            "Lsv\\Datapump\\": "src"
+        }
+    },
+    "require": {
+        "php": "^7.1",
+        "symfony/options-resolver": "^4.3",
+        "macopedia/magmi2": "^200.7",
+        "monolog/monolog": "^2.0",
+        "symfony/console": "^4.3",
+        "symfony/http-foundation": "^4.3",
+        "symfony/filesystem": "^4.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lsv\\DatapumpTest\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.3",
+        "symfony/var-dumper": "^4.3"
+    },
+    "scripts": {
+        "fix": [
+            "curl -OL https://get.sensiolabs.org/security-checker.phar && php security-checker.phar security:check composer.lock && rm security-checker.phar",
+            "curl -OL https://cs.sensiolabs.org/download/php-cs-fixer-v2.phar && php php-cs-fixer-v2.phar fix --using-cache false --allow-risky=yes && rm php-cs-fixer-v2.phar",
+            "curl -OL https://phar.phpunit.de/phpcpd.phar && php phpcpd.phar src/ --min-lines=50 && rm phpcpd.phar",
+            "curl -o phpstan.phar -OL https://phpstan-downloader.aarhof.eu && php phpstan.phar analyse src -l 7 && rm phpstan.phar"
+        ],
+        "test": [
+            "curl -OL https://get.sensiolabs.org/security-checker.phar && php security-checker.phar security:check composer.lock && rm security-checker.phar",
+            "curl -OL https://cs.sensiolabs.org/download/php-cs-fixer-v2.phar && php php-cs-fixer-v2.phar fix --dry-run --using-cache false --diff --allow-risky=yes && rm php-cs-fixer-v2.phar",
+            "curl -OL https://phar.phpunit.de/phpcpd.phar && php phpcpd.phar src/ --min-lines=50 && rm phpcpd.phar",
+            "curl -o phpstan.phar -OL https://phpstan-downloader.aarhof.eu && php phpstan.phar analyse src -l 7 && rm phpstan.phar"
+        ]
+    }
+}
