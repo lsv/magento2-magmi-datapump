@@ -144,7 +144,7 @@ class AbstractProductTest extends TestCase
     {
         $this->product->setVisibility($catalog, $searchable);
         $this->assertSame($result, $this->product->getData()['visibility']);
-        $this->assertSame((string) $result, $this->product->getVisibility());
+        $this->assertSame($result, $this->product->getVisibility());
     }
 
     /**
