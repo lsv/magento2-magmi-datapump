@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb14f9ff5b086b04be1263b897885dd1",
+    "content-hash": "488e1cc370dd623e3da1f56981eb383b",
     "packages": [
         {
             "name": "macopedia/magmi2",
