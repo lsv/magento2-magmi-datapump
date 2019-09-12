@@ -23,7 +23,7 @@ abstract class AbstractImageTest extends TestCase
     protected function setUp(): void
     {
         $this->file = new File(__DIR__.'/../../_image/image.png');
-        $this->configuration = new Configuration(__DIR__.'/../../_temp');
+        $this->configuration = new Configuration(__DIR__.'/../../_temp', '', '', '', '');
     }
 
     protected function tearDown(): void

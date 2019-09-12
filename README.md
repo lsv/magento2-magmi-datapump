@@ -12,7 +12,6 @@ Using object oriented methods to use with [Magmi]() for [Magento 2]()
 use Lsv\Datapump\Configuration;
 use Lsv\Datapump\ItemHolder;
 use Lsv\Datapump\Logger;
-use Lsv\Datapump\Product\AbstractProduct;
 use Lsv\Datapump\Product\ConfigurableProduct;use Monolog\Handler\StreamHandler;
 use Lsv\Datapump\Product\SimpleProduct;
 
@@ -23,20 +22,23 @@ $monolog = new Monolog\Logger('default', [$monologHandler]);
 $logger = new Logger($monolog);
 
 // Next we need a configuration
-$pathToMagentoRootDir = '';
-$configuration = new Configuration($pathToMagentoRootDir);
+$configuration = new Configuration(
+    'path/to/magento/root', // Path to the root of your magento installation
+    'databse name', // The name of the database
+    'database host', // The host of the database
+    'database username', // The username to the database
+    'database password' // The password to the database
+);
 
 // Now we need a instance of Magmi
 
 // Now we can create our ItemHolder which will hold the product we gonna import
-$magmi = new Magmi_ProductImport_DataPump();
-// And we need the name of the profile we gonna use
-$magmiProfile = 'Default';
+$magmi = \Magmi_DataPumpFactory::getDataPumpInstance('productimport');
 
-$holder = new ItemHolder($logger,$magmi,$magmiProfile);
+$holder = new ItemHolder($configuration, $logger, $magmi);
 
 // Now we can start by adding products to the item holder
-$simplePproduct = (new SimpleProduct())
+$simpleProduct = (new SimpleProduct())
     ->setName('Simple product')
     ->setSku('sku')
     ->setDescription('Product description')
@@ -48,11 +50,11 @@ $simplePproduct = (new SimpleProduct())
 // We can ofcourse add other attributes to the product
 // But first you will need to manually add the attribute to the attribute set in magento backend, before it can be used
 
-$simplePproduct->set('name_of_your_attribute', 'the_value');
+$simpleProduct->set('name_of_your_attribute', 'the_value');
 
 // Now we have our simple product, we can now add it to our ItemHolder
 
-$holder->addProduct($simplePproduct);
+$holder->addProduct($simpleProduct);
 
 // And we can now import it
 $holder->import();

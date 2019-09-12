@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lsv\DatapumpTest;
 
+use Lsv\Datapump\Configuration;
 use Lsv\Datapump\Exceptions\NotSupportedMagmiModeException;
 use Lsv\Datapump\Exceptions\ProductAlreadyAddedException;
 use Lsv\Datapump\ItemHolder;
@@ -160,6 +161,47 @@ class ItemHolderTest extends TestCase
         $this->assertCount(1, $this->holder->getProducts());
     }
 
+    /**
+     * @test
+     */
+    public function will_copy_files_to_magmi_directory(): void
+    {
+        $configuration = new Configuration(
+            __DIR__,
+            'my_database_name',
+            'host',
+            'username',
+            'password'
+        );
+
+        $magmi = $this->createMock(Magmi_ProductImport_DataPump::class);
+        $logger = $this->createMock(Logger::class);
+
+        $files = [
+            'ImageAttributeItemProcessor.conf',
+            'ItemIndexer.conf',
+            'magmi.ini',
+            'Magmi_ConfigurableItemProcessor.conf',
+            'Magmi_CSVDataSource.conf',
+            'Magmi_ReindexingPlugin.conf',
+            'plugins.conf',
+        ];
+
+        $dir = __DIR__.'/../vendor/macopedia/magmi2/magmi/conf';
+        foreach ($files as $file) {
+            @unlink($dir.'/'.$file);
+            $this->assertFileNotExists($dir.'/'.$file);
+        }
+
+        new ItemHolder($configuration, $logger, $magmi);
+
+        foreach ($files as $file) {
+            $this->assertFileExists($dir.'/'.$file);
+        }
+
+        $this->assertStringContainsString('my_database_name', file_get_contents($dir.'/magmi.ini'));
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -173,8 +215,16 @@ class ItemHolderTest extends TestCase
         $magmi->method('beginImportSession')->willReturn(null);
         $magmi->method('endImportSession')->willReturn(null);
 
+        $configuration = new Configuration(
+            __DIR__,
+            'name',
+            'host',
+            'username',
+            'password'
+        );
+
         $this->consoleOutput = new BufferedOutput();
 
-        $this->holder = new ItemHolder($logger, $magmi, 'profile', $this->consoleOutput);
+        $this->holder = new ItemHolder($configuration, $logger, $magmi, $this->consoleOutput);
     }
 }

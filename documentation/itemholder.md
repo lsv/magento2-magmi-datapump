@@ -12,9 +12,9 @@ $output = new ConsoleOutput();
 // The info/error/debug will be in the $logger
 
 $itemHolder = new ItemHolder(
+    $configuration, // See usages
     $logger, // See usages
     $magmi, // See usages
-    $profile, // See usages
     $output // Instance of a OutputInterface
 );
 ```

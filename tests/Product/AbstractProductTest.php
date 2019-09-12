@@ -170,7 +170,7 @@ class AbstractProductTest extends TestCase
     public function can_add_single_data(): void
     {
         $file = new File(__DIR__.'/../_image/image.png');
-        $configuration = new Configuration(__DIR__.'/../_temp');
+        $configuration = new Configuration(__DIR__.'/../_temp', '', '', '', '');
         $data = new BaseImage($file, $configuration);
         $this->product->addData($data);
         $this->assertIsNotArray($this->product->getExtraData()[$data->getKey()]);

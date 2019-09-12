@@ -9,9 +9,11 @@ use Lsv\Datapump\Exceptions\ProductAlreadyAddedException;
 use Lsv\Datapump\Product\AbstractProduct;
 use Lsv\Datapump\Product\ConfigurableProductInterface;
 use Magmi_ProductImport_DataPump;
+use RuntimeException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ItemHolder
 {
@@ -30,6 +32,8 @@ class ItemHolder
      */
     public const MAGMI_CREATE = 'xcreate';
 
+    private const MAGMI_PROFILE = 'default';
+
     /**
      * @var AbstractProduct[]
      */
@@ -39,11 +43,6 @@ class ItemHolder
      * @var Magmi_ProductImport_DataPump
      */
     private $magmi;
-
-    /**
-     * @var string
-     */
-    private $magmiProfile;
 
     /**
      * @var string
@@ -61,15 +60,16 @@ class ItemHolder
     private $output;
 
     public function __construct(
+        Configuration $configuration,
         Logger $logger,
         Magmi_ProductImport_DataPump $magmi,
-        string $magmiProfile,
         OutputInterface $output = null
     ) {
         $this->magmi = $magmi;
-        $this->magmiProfile = $magmiProfile;
         $this->logger = $logger;
         $this->output = $output ?: new NullOutput();
+
+        $this->copyMagmiPluginFiles($configuration);
     }
 
     public function getMagmiMode(): string
@@ -185,7 +185,7 @@ class ItemHolder
         $progress->start($this->countProducts());
 
         if (!$dryRun) {
-            $this->magmi->beginImportSession($this->magmiProfile, $this->magmiMode, $this->logger);
+            $this->magmi->beginImportSession(self::MAGMI_PROFILE, $this->magmiMode, $this->logger);
         }
 
         foreach ($this->products as $product) {
@@ -236,5 +236,56 @@ class ItemHolder
         $product->afterImport();
 
         return $output;
+    }
+
+    private function copyMagmiPluginFiles(Configuration $configuration): void
+    {
+        $findMagmiDir = static function (): string {
+            $fs = new Filesystem();
+            $dirs = [
+                __DIR__.'/../vendor',
+                __DIR__.'/../../../vendor',
+                __DIR__.'/../../../../vendor',
+            ];
+
+            foreach ($dirs as $dir) {
+                if ($fs->exists($dir.'/macopedia/magmi2/modman')) {
+                    return $dir.'/macopedia/magmi2/magmi/conf';
+                }
+            }
+
+            // @codeCoverageIgnoreStart
+            throw new RuntimeException('Could not find magmi directory');
+            // @codeCoverageIgnoreEnd
+        };
+
+        $magmiDir = $findMagmiDir();
+
+        $fs = new Filesystem();
+        if ($files = glob(__DIR__.'/../magmifiles/*')) {
+            foreach ($files as $file) {
+                if ($fs->exists($magmiDir.'/'.basename($file))) {
+                    break;
+                }
+
+                $fs->copy($file, $magmiDir.'/'.basename($file));
+                if ('magmi.ini' === basename($file)) {
+                    $replace = [
+                        '<<DB_NAME>>' => $configuration->getDatabaseName(),
+                        '<<DB_HOST>>' => $configuration->getDatabaseHost(),
+                        '<<DB_USERNAME>>' => $configuration->getDatabaseUsername(),
+                        '<<DB_PASSWORD>>' => $configuration->getDatabasePassword(),
+                        '<<MAGENTO_BASEDIR>>' => $configuration->getMagentoDirectory(),
+                    ];
+
+                    if ($content = file_get_contents($magmiDir.'/'.basename($file))) {
+                        file_put_contents(
+                            $magmiDir.'/'.basename($file),
+                            str_replace(array_keys($replace), array_values($replace), $content)
+                        );
+                    }
+                }
+            }
+        }
     }
 }
