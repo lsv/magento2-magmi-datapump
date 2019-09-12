@@ -228,11 +228,12 @@ class ItemHolder
 
     protected function importProduct(AbstractProduct $product, bool $dryRun): string
     {
-        $output = $product->getDebug();
         $product->beforeImport();
         if (!$dryRun) {
             $this->magmi->ingest($product->getMergedData());
         }
+
+        $output = $product->getDebug();
         $product->afterImport();
 
         return $output;
