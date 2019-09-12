@@ -11,6 +11,7 @@ $files = [
 $dirs = [
     __DIR__.'/vendor',
     __DIR__.'/../../vendor',
+    __DIR__.'/../../../vendor',
 ];
 
 function requireFiles(string $dir, array $files)
