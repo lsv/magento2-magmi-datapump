@@ -114,6 +114,7 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
             }
         }
 
+        $this->set('configurable_attributes_array', $this->configurableAttributeKeys);
         $this->set('simple_skus', implode(',', $simpleSkus));
         $this->setPrice($price);
         $this->setQuantity(null, true);
