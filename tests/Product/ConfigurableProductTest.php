@@ -40,6 +40,4 @@ class ConfigurableProductTest extends TestCase
         $config->validateProduct();
         $this->assertSame('2,3', $config->getMergedData()['simple_skus']);
     }
-
-
 }
