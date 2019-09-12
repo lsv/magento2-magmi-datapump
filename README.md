@@ -115,3 +115,4 @@ $holder->addProduct($configurable);
 * [ ] Bundle products
 * [ ] Warehouse inventory
 * [ ] Use Magento to copy media files, so its not hardcoded to media folder, and maybe can use correct storage
+* [ ] Add video to product
