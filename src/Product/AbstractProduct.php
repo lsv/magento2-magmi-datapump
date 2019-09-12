@@ -336,8 +336,8 @@ abstract class AbstractProduct
                 static function ($key, $value) {
                     return "{$key}={$value}";
                 },
-                $data,
-                array_keys($data)
+                array_keys($data),
+                $data
             )
         );
 

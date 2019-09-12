@@ -41,6 +41,7 @@ $simplePproduct = (new SimpleProduct())
     ->setSku('sku')
     ->setDescription('Product description')
     ->setPrice(15.99)
+    ->setTaxClass('tax name')
     ->setQuantity(10);
 
 // This is the minimum data required for a simple product
@@ -80,10 +81,10 @@ $simple1->setName('simple1');
 $simple1->setSku('simple1');
 $simple1->setDescription('description');
 $simple1->setPrice(14.99);
+$simple1->setTaxClass('tax name');
 $simple1->set('color', 'blue');
 $simple1->set('size', 'L');
 // We need to set color and size on the simple product, because it is required by the configurable product
-
 $configurable->addSimpleProduct($simple1);
 
 // And add another simple product to our configurable
@@ -92,12 +93,12 @@ $simple2->setName('simple2');
 $simple2->setSku('simple2');
 $simple2->setDescription('description');
 $simple2->setPrice(13.99);
+$simple2->setTaxClass('tax name');
 $simple2->set('color', 'green');
 $simple2->set('size', 'M');
 $configurable->addSimpleProduct($simple2);
 
-// And lets add it to our itemHolder
-
+// And lets add our configurable product to our itemHolder
 $holder->addProduct($configurable);
 // Only the configurable product should be added to the itemHolder as the simple products will automatically be imported and checked for missing attributes
 ```
