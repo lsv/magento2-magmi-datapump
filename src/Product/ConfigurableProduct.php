@@ -106,12 +106,15 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
     {
         // Find lowest price
         $price = 0;
+        $simpleSkus = [];
         foreach ($this->simpleProducts as $simpleProduct) {
+            $simpleSkus[] = $simpleProduct->getSku();
             if (0 === $price || $price > $simpleProduct->getPrice()) {
                 $price = $simpleProduct->getPrice();
             }
         }
 
+        $this->set('simple_skus', implode(',', $simpleSkus));
         $this->setPrice($price);
         $this->setQuantity(null, true);
 

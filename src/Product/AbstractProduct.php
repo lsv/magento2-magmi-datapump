@@ -59,7 +59,7 @@ abstract class AbstractProduct
                 'name' => null,
                 'description' => null,
                 'short_description' => null,
-                'tax_class_id' => null,
+                'tax_class_id' => 'Taxable Goods',
                 'price' => null,
                 'use_config_manage_stock' => null,
                 'manage_stock' => null,

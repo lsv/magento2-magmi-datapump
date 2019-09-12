@@ -25,4 +25,21 @@ class ConfigurableProductTest extends TestCase
         $product4 = self::createValidConfigurableProduct('4');
         $product4->setSimpleProducts([$product2, $product3]);
     }
+
+    /**
+     * @test
+     */
+    public function will_set_simple_skus_key(): void
+    {
+        $simple1 = self::createValidSimpleProduct('2')->set('color', 'blue');
+        $simple2 = self::createValidSimpleProduct('3')->set('color', 'green');
+
+        $config = self::createValidConfigurableProduct('1');
+        $config->setSimpleProducts([$simple1, $simple2]);
+
+        $config->validateProduct();
+        $this->assertSame('2,3', $config->getMergedData()['simple_skus']);
+    }
+
+
 }
