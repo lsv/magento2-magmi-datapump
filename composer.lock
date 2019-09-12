@@ -4,27 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "488e1cc370dd623e3da1f56981eb383b",
+    "content-hash": "d7e7b6d7b4f6bc800dd655ae20c3ea2d",
     "packages": [
         {
             "name": "macopedia/magmi2",
-            "version": "200.7.25",
+            "version": "dev-feature/config-query",
             "source": {
                 "type": "git",
-                "url": "https://github.com/macopedia/magmi-m2.git",
-                "reference": "b7dd5e8d0d38861e5b6d9f5d065a4954654677b8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/macopedia/magmi-m2/zipball/b7dd5e8d0d38861e5b6d9f5d065a4954654677b8",
-                "reference": "b7dd5e8d0d38861e5b6d9f5d065a4954654677b8",
-                "shasum": ""
+                "url": "git@github.com:lsv/magmi-m2.git",
+                "reference": "2284f7f60333754f19350bb85f94d2845fbae233"
             },
             "bin": [
                 "magmi/cli/magmi.cli.php"
             ],
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -39,7 +32,7 @@
             ],
             "description": "Magento Mass Importer 'Magmi' for Magento 2",
             "homepage": "http://macopedia.com",
-            "time": "2019-08-02T07:15:53+00:00"
+            "time": "2019-09-12T11:08:18+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1002,18 +995,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "role": "Developer",
-                    "email": "sebastian@phpeople.de"
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "Developer",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
@@ -2276,7 +2269,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "macopedia/magmi2": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
