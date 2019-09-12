@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lsv\Datapump\Product;
 
-use Lsv\Datapump\Data\DataInterface;
+use Lsv\Datapump\Product\Data\DataInterface;
 use Lsv\Datapump\Utils\DataObject;
 use ReflectionClass;
 use ReflectionMethod;

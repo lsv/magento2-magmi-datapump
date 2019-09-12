@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lsv\Datapump\Data;
+namespace Lsv\Datapump\Product\Data;
 
 interface DataInterface
 {

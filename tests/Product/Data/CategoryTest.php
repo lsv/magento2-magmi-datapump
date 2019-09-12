@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lsv\DatapumpTest\Data;
+namespace Lsv\DatapumpTest\Product\Data;
 
-use Lsv\Datapump\Data\Category;
+use Lsv\Datapump\Product\Data\Category;
 use PHPUnit\Framework\TestCase;
 
 class CategoryTest extends TestCase
