@@ -26,7 +26,8 @@ class SimpleProduct extends AbstractProduct
         $resolver->setAllowedValues('visibility', [self::VISIBILITY_NOTVISIBLE, self::VISIBILITY_CATALOG, self::VISIBILITY_SEARCH, self::VISIBILITY_CATALOG_SEARCH]);
         $resolver->setAllowedTypes('description', 'string');
         $resolver->setAllowedTypes('short_description', 'string');
-        $resolver->setAllowedTypes('weight', ['int', 'float']);
+        $resolver->setAllowedTypes('weight', ['int', 'float', 'null']);
+        $resolver->setAllowedValues('product_has_weight', [true, false]);
         $resolver->setAllowedValues('status', [1, 2]);
         $resolver->setAllowedTypes('price', 'float');
         $resolver->setAllowedTypes('tax_class_id', 'string');
