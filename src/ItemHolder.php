@@ -59,6 +59,11 @@ class ItemHolder
      */
     private $output;
 
+    /**
+     * @var array
+     */
+    private $productsAdded = [];
+
     public function __construct(
         Configuration $configuration,
         Logger $logger,
@@ -112,11 +117,12 @@ class ItemHolder
         $product->validateProduct();
 
         // Is the SKU already added?
-        if ($this->findProductBySku($product->getSku())) {
+        if ($this->findProductBySku($product->getSku(), $product->getStore())) {
             throw new ProductAlreadyAddedException($product->getSku());
         }
 
         $this->products[] = $product;
+        $this->productsAdded[$product->getSku()][$product->getStore()] = true;
 
         return $this;
     }
@@ -166,6 +172,7 @@ class ItemHolder
 
     public function reset(): void
     {
+        $this->productsAdded = [];
         $this->products = [];
     }
 
@@ -223,15 +230,9 @@ class ItemHolder
         return implode("\n", $debug);
     }
 
-    protected function findProductBySku(?string $sku): bool
+    protected function findProductBySku(?string $sku, ?string $store): bool
     {
-        foreach ($this->products as $product) {
-            if ($product->getSku() === $sku) {
-                return true;
-            }
-        }
-
-        return false;
+        return isset($this->productsAdded[$sku][$store]);
     }
 
     protected function importProduct(AbstractProduct $product, bool $dryRun): string

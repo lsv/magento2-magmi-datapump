@@ -80,6 +80,26 @@ class ItemHolderTest extends TestCase
     /**
      * @test
      */
+    public function can_add_product_with_same_sku_but_different_store(): void
+    {
+        $product1 = $this->createMock(SimpleProduct::class);
+        $product1->method('getSku')->willReturn('1');
+        $product1->method('getStore')->willReturn('1');
+
+        $product2 = $this->createMock(SimpleProduct::class);
+        $product2->method('getSku')->willReturn('1');
+        $product2->method('getStore')->willReturn('2');
+
+        $this->holder
+            ->addProduct($product1)
+            ->addProduct($product2);
+        $this->assertSame(2, $this->holder->countProducts());
+    }
+
+
+    /**
+     * @test
+     */
     public function will_count_products_and_configurable_simple_products(): void
     {
         $product1 = self::createValidSimpleProduct();

@@ -20,7 +20,7 @@ class SimpleProduct extends AbstractProduct
     protected function validate(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
-            'type', 'visibility', 'name', 'weight', 'status', 'price', 'tax_class_id', 'attribute_set',
+            'type', 'visibility', 'name', 'weight', 'product_has_weight', 'status', 'price', 'tax_class_id', 'attribute_set',
         ]);
         $resolver->setAllowedValues('type', self::TYPE_SIMPLE);
         $resolver->setAllowedValues('visibility', [self::VISIBILITY_NOTVISIBLE, self::VISIBILITY_CATALOG, self::VISIBILITY_SEARCH, self::VISIBILITY_CATALOG_SEARCH]);

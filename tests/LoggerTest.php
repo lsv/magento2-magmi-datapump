@@ -105,7 +105,7 @@ class LoggerTest extends TestCase
         $logger = new \Monolog\Logger('log');
         $logger->pushHandler($handler);
 
-        $this->logger = new Logger($logger);
+        $this->logger = new Logger($logger, true);
     }
 
     private function writetest(string $type, bool $willWrite, string $realType): void
