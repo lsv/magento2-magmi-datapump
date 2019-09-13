@@ -11,9 +11,15 @@ class Logger extends \Magmi_Logger
      */
     private $logger;
 
-    public function __construct(\Monolog\Logger $monolog)
+    /**
+     * @var bool
+     */
+    private $writeDebug;
+
+    public function __construct(\Monolog\Logger $monolog, bool $writeDebug = false)
     {
         $this->logger = $monolog;
+        $this->writeDebug = $writeDebug;
     }
 
     public function log($data, $type = null): void
@@ -35,7 +41,9 @@ class Logger extends \Magmi_Logger
             case 'columns':
             case 'title':
             case 'lookup':
-                $this->logger->debug("{$type}: {$data}");
+                if ($this->writeDebug) {
+                    $this->logger->debug("{$type}: {$data}");
+                }
                 break;
             case 'error':
                 $this->logger->error($data);

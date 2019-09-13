@@ -196,13 +196,19 @@ class ItemHolder
             if ($product instanceof ConfigurableProductInterface) {
                 foreach ($product->getSimpleProducts() as $simpleProduct) {
                     $progress->setMessage('Importing: ' . $simpleProduct->getSku());
-                    $debug[] = $this->importProduct($simpleProduct, $dryRun);
+                    $importedLog = $this->importProduct($simpleProduct, $dryRun);
+                    $this->logger->log($importedLog, 'debug');
+                    $debug[] = $importedLog;
+
                     $progress->advance();
                 }
             }
 
             $progress->setMessage('Importing: ' . $product->getSku());
-            $debug[] = $this->importProduct($product, $dryRun);
+            $importedLog = $this->importProduct($product, $dryRun);
+            $this->logger->log($importedLog, 'debug');
+            $debug[] = $importedLog;
+
             $progress->advance();
         }
 
@@ -210,10 +216,6 @@ class ItemHolder
 
         if (!$dryRun) {
             $this->magmi->endImportSession();
-        }
-
-        foreach ($debug as $item) {
-            $this->logger->log($item, 'debug');
         }
 
         $this->afterImport($debug);
