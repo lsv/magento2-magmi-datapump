@@ -108,7 +108,6 @@ class AbstractProductTest extends TestCase
         $this->assertTrue($this->product->hasWeight());
     }
 
-
     public function dataProvider(): Generator
     {
         yield ['store', 'admin', true];

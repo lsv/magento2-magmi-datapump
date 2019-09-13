@@ -118,7 +118,7 @@ class ItemHolder
 
         // Is the SKU already added?
         if ($this->findProductBySku($product->getSku(), $product->getStore())) {
-            throw new ProductAlreadyAddedException($product->getSku());
+            throw new ProductAlreadyAddedException($product->getSku(), $product->getStore());
         }
 
         $this->products[] = $product;
@@ -177,7 +177,7 @@ class ItemHolder
     }
 
     /**
-     * @param bool $dryRun
+     * @param bool        $dryRun
      * @param string|null $progressBarFormat
      *
      * @return string
@@ -202,7 +202,7 @@ class ItemHolder
         foreach ($this->products as $product) {
             if ($product instanceof ConfigurableProductInterface) {
                 foreach ($product->getSimpleProducts() as $simpleProduct) {
-                    $progress->setMessage('Importing: ' . $simpleProduct->getSku());
+                    $progress->setMessage('Importing: '.$simpleProduct->getSku());
                     $importedLog = $this->importProduct($simpleProduct, $dryRun);
                     $this->logger->log($importedLog, 'debug');
                     $debug[] = $importedLog;
@@ -211,7 +211,7 @@ class ItemHolder
                 }
             }
 
-            $progress->setMessage('Importing: ' . $product->getSku());
+            $progress->setMessage('Importing: '.$product->getSku());
             $importedLog = $this->importProduct($product, $dryRun);
             $this->logger->log($importedLog, 'debug');
             $debug[] = $importedLog;

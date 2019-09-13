@@ -96,7 +96,6 @@ class ItemHolderTest extends TestCase
         $this->assertSame(2, $this->holder->countProducts());
     }
 
-
     /**
      * @test
      */

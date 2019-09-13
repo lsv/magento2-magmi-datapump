@@ -14,7 +14,9 @@ class ProductAlreadyAddedExceptionTest extends TestCase
      */
     public function getters(): void
     {
-        $e = new ProductAlreadyAddedException('sku');
+        $e = new ProductAlreadyAddedException('sku', 'store');
         $this->assertSame('sku', $e->getSku());
+        $this->assertSame('store', $e->getStore());
+        $this->assertSame('Product with SKU: "sku" and store: "store" is already added', (string) $e);
     }
 }

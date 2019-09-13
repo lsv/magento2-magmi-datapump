@@ -191,6 +191,7 @@ abstract class AbstractProduct
     {
         $this->set('weight', $weight);
         $this->set('product_has_weight', true);
+
         return $this;
     }
 
