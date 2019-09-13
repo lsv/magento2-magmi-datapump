@@ -112,7 +112,7 @@ class ItemHolderTest extends TestCase
             ->setType(AbstractProduct::TYPE_SIMPLE)
             ->setQuantity(10)
             ->setSku('update_sku')
-            ->setStore('store');
+            ->setStoreViewName('store');
 
         $this->holder
             ->addProduct($product1)
@@ -138,7 +138,7 @@ class ItemHolderTest extends TestCase
             ->addProduct($product1)
             ->addProduct($product4);
 
-        $this->assertCount(4, explode("\n", $this->holder->import()));
+        $this->assertCount(4, explode("\n", $this->holder->import(false, '%current%/%max%')));
         $this->assertStringContainsString('4/4', $this->consoleOutput->fetch());
     }
 

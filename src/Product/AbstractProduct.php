@@ -95,6 +95,13 @@ abstract class AbstractProduct
     {
     }
 
+    /**
+     * Needs to be the NAME of the store VIEW! - NOT the code!
+     *
+     * @param string $store
+     *
+     * @return self
+     */
     public function setStore(string $store): self
     {
         return $this->set('store', $store);
@@ -103,6 +110,23 @@ abstract class AbstractProduct
     public function getStore()
     {
         return $this->get('store');
+    }
+
+    /**
+     * Needs to be the NAME of the store VIEW! - NOT the code!
+     *
+     * @param string $store
+     *
+     * @return self
+     */
+    public function setStoreViewName(string $store): self
+    {
+        return $this->set('store', $store);
+    }
+
+    public function getStoreViewName()
+    {
+        return $this->getStore();
     }
 
     public function setAttributeSet(string $set): self

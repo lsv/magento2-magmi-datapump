@@ -23,6 +23,7 @@ class AbstractProductTest extends TestCase
     public function gettersDataProvider(): Generator
     {
         yield ['store'];
+        yield ['storeViewName', 'de', 'store'];
         yield ['attributeSet', 'value', 'attribute_set'];
         yield ['type'];
         yield ['description'];
