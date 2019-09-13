@@ -67,7 +67,8 @@ abstract class AbstractProduct
                 'qty' => null,
                 'attribute_set' => 'Default',
                 'visibility' => self::VISIBILITY_CATALOG_SEARCH,
-                'weight' => 0.01,
+                'weight' => null,
+                'product_has_weight' => false,
                 'status' => 1,
                 'store' => 'admin',
             ]
@@ -188,12 +189,19 @@ abstract class AbstractProduct
 
     public function setWeight(float $weight): self
     {
-        return $this->set('weight', $weight);
+        $this->set('weight', $weight);
+        $this->set('product_has_weight', true);
+        return $this;
     }
 
     public function getWeight()
     {
         return $this->get('weight');
+    }
+
+    public function hasWeight()
+    {
+        return  $this->get('product_has_weight');
     }
 
     public function setStatus(bool $enabled): self

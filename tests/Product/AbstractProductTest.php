@@ -95,6 +95,20 @@ class AbstractProductTest extends TestCase
         $this->assertSame(1, $this->product->getData()['is_in_stock']);
     }
 
+    /**
+     * @test
+     */
+    public function product_weight(): void
+    {
+        $this->assertNull($this->product->getWeight());
+        $this->assertFalse($this->product->hasWeight());
+
+        $this->product->setWeight(1);
+        $this->assertSame(1.0, $this->product->getWeight());
+        $this->assertTrue($this->product->hasWeight());
+    }
+
+
     public function dataProvider(): Generator
     {
         yield ['store', 'admin', true];
