@@ -171,10 +171,11 @@ class ItemHolder
 
     /**
      * @param bool $dryRun
+     * @param string|null $progressBarFormat
      *
      * @return string
      */
-    public function import(bool $dryRun = false): string
+    public function import(bool $dryRun = false, ?string $progressBarFormat = null): string
     {
         $this->beforeImport();
 
@@ -182,6 +183,9 @@ class ItemHolder
 
         // Progress
         $progress = new ProgressBar($this->output);
+        if ($progressBarFormat) {
+            $progress->setFormat($progressBarFormat);
+        }
         $progress->start($this->countProducts());
 
         if (!$dryRun) {
@@ -191,11 +195,13 @@ class ItemHolder
         foreach ($this->products as $product) {
             if ($product instanceof ConfigurableProductInterface) {
                 foreach ($product->getSimpleProducts() as $simpleProduct) {
+                    $progress->setMessage('Importing: ' . $simpleProduct->getSku());
                     $debug[] = $this->importProduct($simpleProduct, $dryRun);
                     $progress->advance();
                 }
             }
 
+            $progress->setMessage('Importing: ' . $product->getSku());
             $debug[] = $this->importProduct($product, $dryRun);
             $progress->advance();
         }
