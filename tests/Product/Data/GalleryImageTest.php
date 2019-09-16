@@ -13,11 +13,11 @@ class GalleryImageTest extends AbstractImageTest
      */
     public function can_create_gallery_image_with_label(): void
     {
-        $base = new GalleryImage($this->file, $this->configuration, 'label');
+        $base = new GalleryImage($this->file, 'label');
         $this->assertSame(';', $base->arrayMergeString());
         $this->assertTrue($base->allowMultiple());
         $this->assertSame('gallery', $base->getKey());
-        $this->assertSame('i/m/image.png::label', $base->getData());
+        $this->assertSame($this->file->getPathname().'::label', $base->getData());
     }
 
     /**
@@ -25,9 +25,9 @@ class GalleryImageTest extends AbstractImageTest
      */
     public function can_create_gallery_image_without_label(): void
     {
-        $base = new GalleryImage($this->file, $this->configuration);
+        $base = new GalleryImage($this->file);
         $this->assertTrue($base->allowMultiple());
         $this->assertSame('gallery', $base->getKey());
-        $this->assertSame('i/m/image.png', $base->getData());
+        $this->assertSame($this->file->getPathname(), $base->getData());
     }
 }

@@ -13,10 +13,9 @@ class SmallImageTest extends AbstractImageTest
      */
     public function can_create_small_image(): void
     {
-        $base = new SmallImage($this->file, $this->configuration);
+        $base = new SmallImage($this->file);
         $this->assertFalse($base->allowMultiple());
         $this->assertSame('small_image', $base->getKey());
-        $this->assertSame('i/m/image.png', $base->getData());
-        $this->assertFileExists($this->configuration->getMagentoDirectory().'/i/m/image.png');
+        $this->assertSame($this->file->getPathname(), $base->getData());
     }
 }

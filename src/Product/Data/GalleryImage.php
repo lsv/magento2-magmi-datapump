@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lsv\Datapump\Product\Data;
 
-use Lsv\Datapump\Configuration;
 use Symfony\Component\HttpFoundation\File\File;
 
 class GalleryImage extends ImageAbstract
@@ -14,9 +13,9 @@ class GalleryImage extends ImageAbstract
      */
     private $label;
 
-    public function __construct(File $file, Configuration $configuration, string $label = '', bool $renameIfFileAlreadyExists = false)
+    public function __construct(File $file, string $label = '')
     {
-        parent::__construct($file, $configuration, $renameIfFileAlreadyExists);
+        parent::__construct($file);
         $this->label = $label;
     }
 

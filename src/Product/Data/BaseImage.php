@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Lsv\Datapump\Product\Data;
 
-use Lsv\Datapump\Configuration;
 use Symfony\Component\HttpFoundation\File\File;
 
 class BaseImage extends ImageAbstract
@@ -14,9 +13,9 @@ class BaseImage extends ImageAbstract
      */
     private $addToGallery;
 
-    public function __construct(File $file, Configuration $configuration, bool $addToGallery = true, $renameIfFileAlreadyExists = false)
+    public function __construct(File $file, bool $addToGallery = true)
     {
-        parent::__construct($file, $configuration, $renameIfFileAlreadyExists);
+        parent::__construct($file);
         $this->addToGallery = $addToGallery;
     }
 

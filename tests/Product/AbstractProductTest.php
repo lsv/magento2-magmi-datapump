@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Lsv\DatapumpTest\Product;
 
 use Generator;
-use Lsv\Datapump\Configuration;
+use Lsv\Datapump\Product\AbstractProduct;
 use Lsv\Datapump\Product\Data\BaseImage;
 use Lsv\Datapump\Product\Data\Category;
-use Lsv\Datapump\Product\AbstractProduct;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -184,11 +183,10 @@ class AbstractProductTest extends TestCase
     public function can_add_single_data(): void
     {
         $file = new File(__DIR__.'/../_image/image.png');
-        $configuration = new Configuration(__DIR__.'/../_temp', '', '', '', '');
-        $data = new BaseImage($file, $configuration);
+        $data = new BaseImage($file);
         $this->product->addData($data);
         $this->assertIsNotArray($this->product->getExtraData()[$data->getKey()]);
-        $this->assertSame('+i/m/image.png', $this->product->getExtraData()[$data->getKey()]);
+        $this->assertSame('+'.$file->getPathname(), $this->product->getExtraData()[$data->getKey()]);
     }
 
     protected function setUp(): void

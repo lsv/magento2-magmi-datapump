@@ -13,10 +13,9 @@ class ThumbnailImageTest extends AbstractImageTest
      */
     public function can_create_small_image(): void
     {
-        $base = new ThumbnailImage($this->file, $this->configuration);
+        $base = new ThumbnailImage($this->file);
         $this->assertFalse($base->allowMultiple());
         $this->assertSame('thumbnail', $base->getKey());
-        $this->assertSame('i/m/image.png', $base->getData());
-        $this->assertFileExists($this->configuration->getMagentoDirectory().'/i/m/image.png');
+        $this->assertSame($this->file->getPathname(), $base->getData());
     }
 }
