@@ -100,6 +100,10 @@ $simple2->set('color', 'green');
 $simple2->set('size', 'M');
 $configurable->addSimpleProduct($simple2);
 
+// If you already have created the simple products, you can also add them to the configurable product by using
+$configurable->addSimpleSku('already-created-sku-1');
+$configurable->addSimpleSku('already-created-sku-2');
+
 // And lets add our configurable product to our itemHolder
 $holder->addProduct($configurable);
 // Only the configurable product should be added to the itemHolder as the simple products will automatically be imported and checked for missing attributes

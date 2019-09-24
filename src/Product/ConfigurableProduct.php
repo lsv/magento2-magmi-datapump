@@ -25,6 +25,11 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
     private $simpleProducts = [];
 
     /**
+     * @var string[]
+     */
+    private $simpleSkus = [];
+
+    /**
      * @var array
      */
     private $configurableAttributeKeys;
@@ -97,6 +102,23 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
         return $this;
     }
 
+    public function addSimpleSku(string $sku): self
+    {
+        $this->simpleSkus[] = $sku;
+
+        return $this;
+    }
+
+    public function setSimpleSkus(array $skus): self
+    {
+        $this->simpleSkus = [];
+        foreach ($skus as $sku) {
+            $this->addSimpleSku($sku);
+        }
+
+        return $this;
+    }
+
     public function countSimpleProducts(): int
     {
         return count($this->getSimpleProducts());
@@ -115,7 +137,7 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
         }
 
         $this->set('configurable_attributes', implode(',', $this->configurableAttributeKeys));
-        $this->set('simple_skus', implode(',', $simpleSkus));
+        $this->set('simple_skus', implode(',', array_merge($simpleSkus, $this->simpleSkus)));
         $this->setPrice($price);
         $this->setQuantity(null, true);
 

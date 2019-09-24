@@ -34,10 +34,23 @@ class ConfigurableProductTest extends TestCase
         $simple1 = self::createValidSimpleProduct('2')->set('color', 'blue');
         $simple2 = self::createValidSimpleProduct('3')->set('color', 'green');
 
-        $config = self::createValidConfigurableProduct('1');
+        $config = self::createValidConfigurableProduct();
         $config->setSimpleProducts([$simple1, $simple2]);
 
         $config->validateProduct();
         $this->assertSame('2,3', $config->getMergedData()['simple_skus']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_add_simple_products_just_with_sku(): void
+    {
+        $config = self::createValidConfigurableProduct();
+        $config->addSimpleSku('already-added-sku-1');
+        $config->addSimpleSku('already-added-sku-2');
+
+        $config->validateProduct();
+        $this->assertSame('already-added-sku-1,already-added-sku-2', $config->getMergedData()['simple_skus']);
     }
 }
