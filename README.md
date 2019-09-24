@@ -127,6 +127,7 @@ $holder->addProduct($configurable);
 * [How to add categories to a product](documentation/categories.md)
 * [How to add images to a product](documentation/images.md)
 * [More about the itemHolder](documentation/itemholder.md)
+* [Product relations](documentation/relations.md)
 
 ### TODO
 
