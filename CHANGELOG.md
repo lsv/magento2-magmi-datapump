@@ -1,3 +1,7 @@
+### v2.0.3
+
+* Added [delete product](documentation/deleteproduct.md)
+
 ### v2.0.2
 
 * Add [Product relations](documentation/relations.md)
