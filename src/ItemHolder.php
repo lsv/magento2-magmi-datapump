@@ -274,11 +274,11 @@ class ItemHolder
         $fs = new Filesystem();
         if ($files = glob(__DIR__.'/../magmifiles/*')) {
             foreach ($files as $file) {
-                if ($fs->exists($magmiDir.'/'.basename($file))) {
+                if (basename($file) !== 'plugins.conf' && $fs->exists($magmiDir.'/'.basename($file))) {
                     break;
                 }
 
-                $fs->copy($file, $magmiDir.'/'.basename($file));
+                $fs->copy($file, $magmiDir.'/'.basename($file), true);
                 if ('magmi.ini' === basename($file)) {
                     $replace = [
                         '<<DB_NAME>>' => $configuration->getDatabaseName(),
