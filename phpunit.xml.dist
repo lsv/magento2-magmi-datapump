@@ -8,6 +8,11 @@
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
          verbose="true">
+
+    <php>
+        <server name="SYMFONY_PHPUNIT_VERSION" value="8"/>
+    </php>
+
     <testsuites>
         <testsuite name="default">
             <directory>tests</directory>
@@ -19,4 +24,8 @@
             <directory>src</directory>
         </whitelist>
     </filter>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
 </phpunit>

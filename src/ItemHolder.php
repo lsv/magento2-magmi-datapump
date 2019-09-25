@@ -164,7 +164,7 @@ class ItemHolder
 
         /** @var ConfigurableProductInterface $configurableProduct */
         foreach ($configurableProducts as $configurableProduct) {
-            $counter += $configurableProduct->countSimpleProducts();
+            $counter += $configurableProduct->countProducts();
         }
 
         return count($this->getProducts()) + $counter;
@@ -201,7 +201,7 @@ class ItemHolder
 
         foreach ($this->products as $product) {
             if ($product instanceof ConfigurableProductInterface) {
-                foreach ($product->getSimpleProducts() as $simpleProduct) {
+                foreach ($product->getProducts() as $simpleProduct) {
                     $progress->setMessage('Importing: '.$simpleProduct->getSku());
                     $importedLog = $this->importProduct($simpleProduct, $dryRun);
                     $this->logger->log($importedLog, 'debug');
@@ -274,7 +274,7 @@ class ItemHolder
         $fs = new Filesystem();
         if ($files = glob(__DIR__.'/../magmifiles/*')) {
             foreach ($files as $file) {
-                if (basename($file) !== 'plugins.conf' && $fs->exists($magmiDir.'/'.basename($file))) {
+                if ('plugins.conf' !== basename($file) && $fs->exists($magmiDir.'/'.basename($file))) {
                     break;
                 }
 

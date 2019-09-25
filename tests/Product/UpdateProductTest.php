@@ -46,7 +46,7 @@ class UpdateProductTest extends TestCase
         $this->holder->addProduct($product);
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $configuration = $this->createMock(Configuration::class);
         $logger = $this->createMock(Logger::class);

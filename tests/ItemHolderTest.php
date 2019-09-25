@@ -106,7 +106,7 @@ class ItemHolderTest extends TestCase
         $product3 = self::createValidSimpleProduct('3')->set('color', 'blue');
 
         $product4 = self::createValidConfigurableProduct('4');
-        $product4->setSimpleProducts([$product2, $product3]);
+        $product4->setProducts([$product2, $product3]);
 
         $product5 = (new UpdateProduct())
             ->setType(AbstractProduct::TYPE_SIMPLE)
@@ -132,7 +132,7 @@ class ItemHolderTest extends TestCase
         $product3 = self::createValidSimpleProduct('3')->set('color', 'blue');
 
         $product4 = self::createValidConfigurableProduct('4');
-        $product4->setSimpleProducts([$product2, $product3]);
+        $product4->setProducts([$product2, $product3]);
 
         $this->holder
             ->addProduct($product1)

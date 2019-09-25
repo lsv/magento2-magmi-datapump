@@ -9,6 +9,7 @@ use Lsv\Datapump\Product\ValidationTraits\DescriptionTrait;
 use Lsv\Datapump\Product\ValidationTraits\QuantityTrait;
 use Lsv\Datapump\Product\ValidationTraits\SkuTrait;
 use Lsv\Datapump\Product\ValidationTraits\StoreTrait;
+use Lsv\Datapump\Product\ValidationTraits\VisibilityTrait;
 use Lsv\Datapump\Utils\DataObject;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,16 +19,12 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
     use QuantityTrait;
     use SkuTrait;
     use StoreTrait;
+    use VisibilityTrait;
 
     /**
-     * @var SimpleProduct[]
+     * @var AbstractProduct[]
      */
-    private $simpleProducts = [];
-
-    /**
-     * @var string[]
-     */
-    private $simpleSkus = [];
+    private $products = [];
 
     /**
      * @var array
@@ -37,35 +34,49 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
     public function __construct(array $configurableAttributeKeys)
     {
         parent::__construct();
-        $this->configurableAttributeKeys = $configurableAttributeKeys;
+        $this->setConfigurableAttributeKeys($configurableAttributeKeys);
 
-        $this->data = new DataObject([
-            'type' => $this->getProductType(),
-            'sku' => null,
-            'name' => null,
-            'description' => null,
-            'short_description' => null,
-            'tax_class_id' => null,
-            'price' => null,
-            'attribute_set' => 'Default',
-            'visibility' => self::VISIBILITY_CATALOG_SEARCH,
-            'status' => 1,
-            'store' => 'admin',
-            'use_config_manage_stock' => null,
-            'manage_stock' => null,
-            'is_in_stock' => null,
-            'qty' => null,
-        ]);
+        $this->data = new DataObject(
+            [
+                'type' => $this->getProductType(),
+                'sku' => null,
+                'name' => null,
+                'description' => null,
+                'short_description' => null,
+                'tax_class_id' => null,
+                'price' => null,
+                'attribute_set' => 'Default',
+                'visibility' => self::VISIBILITY_CATALOG_SEARCH,
+                'status' => 1,
+                'store' => 'admin',
+                'use_config_manage_stock' => null,
+                'manage_stock' => null,
+                'is_in_stock' => null,
+                'qty' => null,
+            ]
+        );
+    }
+
+    public function setConfigurableAttributeKeys(array $keys): self
+    {
+        $this->configurableAttributeKeys = $keys;
+
+        return $this;
+    }
+
+    public function getConfigurableAttributeKeys(): array
+    {
+        return $this->configurableAttributeKeys;
     }
 
     /**
-     * @param SimpleProduct $product
+     * @param AbstractProduct $product
      *
      * @return ConfigurableProduct
      *
      * @throws SimpleProductMissingKeyException
      */
-    public function addSimpleProduct(SimpleProduct $product): self
+    public function addProduct(AbstractProduct $product): self
     {
         foreach ($this->configurableAttributeKeys as $key) {
             if (!$product->has($key)) {
@@ -75,18 +86,75 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
 
         $product->validateProduct();
 
-        $this->simpleProducts[] = $product;
+        $this->products[] = $product;
 
         return $this;
     }
 
-    public function getSimpleProducts(): array
+    /**
+     * @return AbstractProduct[]
+     */
+    public function getProducts(): array
     {
-        return $this->simpleProducts;
+        return $this->products;
     }
 
     /**
-     * @param array $products
+     * @param AbstractProduct[] $products
+     *
+     * @return $this
+     *
+     * @throws SimpleProductMissingKeyException
+     */
+    public function setProducts(array $products): self
+    {
+        $this->products = [];
+        foreach ($products as $product) {
+            $this->addProduct($product);
+        }
+
+        return $this;
+    }
+
+    public function countProducts(): int
+    {
+        return count($this->getProducts());
+    }
+
+    /**
+     * @deprecated Use `addProduct` instead
+     *
+     * @param AbstractProduct $product
+     *
+     * @return $this
+     *
+     * @throws SimpleProductMissingKeyException
+     */
+    public function addSimpleProduct(AbstractProduct $product): self
+    {
+        @trigger_error('Use `addProduct` instead', E_USER_DEPRECATED);
+
+        $this->addProduct($product);
+
+        return $this;
+    }
+
+    /**
+     * @deprecated Use `getProducts` instead
+     *
+     * @return AbstractProduct[]
+     */
+    public function getSimpleProducts(): array
+    {
+        @trigger_error('Use `getProducts` instead', E_USER_DEPRECATED);
+
+        return $this->getProducts();
+    }
+
+    /**
+     * @deprecated Use `setProducts` instead
+     *
+     * @param AbstractProduct[] $products
      *
      * @return ConfigurableProduct
      *
@@ -94,34 +162,21 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
      */
     public function setSimpleProducts(array $products): self
     {
-        $this->simpleProducts = [];
-        foreach ($products as $product) {
-            $this->addSimpleProduct($product);
-        }
+        @trigger_error('Use `setProducts` instead', E_USER_DEPRECATED);
 
-        return $this;
+        return $this->setProducts($products);
     }
 
-    public function addSimpleSku(string $sku): self
-    {
-        $this->simpleSkus[] = $sku;
-
-        return $this;
-    }
-
-    public function setSimpleSkus(array $skus): self
-    {
-        $this->simpleSkus = [];
-        foreach ($skus as $sku) {
-            $this->addSimpleSku($sku);
-        }
-
-        return $this;
-    }
-
+    /**
+     * @deprecated Use `countProducts` instead
+     *
+     * @return int
+     */
     public function countSimpleProducts(): int
     {
-        return count($this->getSimpleProducts());
+        @trigger_error('Use `countProducts` instead', E_USER_DEPRECATED);
+
+        return $this->countProducts();
     }
 
     public function beforeValidate(): void
@@ -129,15 +184,17 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
         // Find lowest price
         $price = 0;
         $simpleSkus = [];
-        foreach ($this->simpleProducts as $simpleProduct) {
+        foreach ($this->products as $simpleProduct) {
             $simpleSkus[] = $simpleProduct->getSku();
-            if (0 === $price || $price > $simpleProduct->getPrice()) {
-                $price = $simpleProduct->getPrice();
+            if (null !== $simpleProduct->getPrice()) {
+                if (0 === $price || $price > $simpleProduct->getPrice()) {
+                    $price = $simpleProduct->getPrice();
+                }
             }
         }
 
         $this->set('configurable_attributes', implode(',', $this->configurableAttributeKeys));
-        $this->set('simple_skus', implode(',', array_merge($simpleSkus, $this->simpleSkus)));
+        $this->set('simple_skus', implode(',', $simpleSkus));
         $this->setPrice($price);
         $this->setQuantity(null, true);
 
@@ -149,7 +206,6 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
         $resolver->setRequired(
             [
                 'type',
-                'visibility',
                 'name',
                 'status',
                 'price',
@@ -158,13 +214,6 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
             ]
         );
         $resolver->setAllowedValues('type', self::TYPE_CONFIGURABLE);
-        $resolver->setAllowedValues(
-            'visibility',
-            [self::VISIBILITY_NOTVISIBLE,
-                self::VISIBILITY_CATALOG,
-                self::VISIBILITY_SEARCH,
-                self::VISIBILITY_CATALOG_SEARCH, ]
-        );
         $resolver->setAllowedTypes('name', 'string');
         $resolver->setAllowedValues('status', [1, 2]);
         $resolver->setAllowedTypes('price', 'float');

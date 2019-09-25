@@ -1,3 +1,11 @@
+### v2.0.4
+
+* Deprecated `ConfigurableProduct::addSimpleProduct` use `ConfigurableProduct::addProduct` instead
+* Deprecated `ConfigurableProduct::getSimpleProducts` use `ConfigurableProduct::getProducts` instead
+* Deprecated `ConfigurableProduct::setSimpleProducts` use `ConfigurableProduct::setProducts` instead
+* Deprecated `ConfigurableProduct::countSimpleProducts` use `ConfigurableProduct::countProducts` instead
+* Allow `ConfigurableProduct::addProduct` use use other product type than just `SimpleProduct`
+
 ### v2.0.3
 
 * Added [delete product](documentation/deleteproduct.md)

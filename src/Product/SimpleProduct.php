@@ -8,6 +8,7 @@ use Lsv\Datapump\Product\ValidationTraits\DescriptionTrait;
 use Lsv\Datapump\Product\ValidationTraits\QuantityTrait;
 use Lsv\Datapump\Product\ValidationTraits\SkuTrait;
 use Lsv\Datapump\Product\ValidationTraits\StoreTrait;
+use Lsv\Datapump\Product\ValidationTraits\VisibilityTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SimpleProduct extends AbstractProduct
@@ -16,14 +17,23 @@ class SimpleProduct extends AbstractProduct
     use QuantityTrait;
     use SkuTrait;
     use StoreTrait;
+    use VisibilityTrait;
 
     protected function validate(OptionsResolver $resolver): void
     {
-        $resolver->setRequired([
-            'type', 'visibility', 'name', 'weight', 'product_has_weight', 'status', 'price', 'tax_class_id', 'attribute_set',
-        ]);
+        $resolver->setRequired(
+            [
+                'type',
+                'name',
+                'weight',
+                'product_has_weight',
+                'status',
+                'price',
+                'tax_class_id',
+                'attribute_set',
+            ]
+        );
         $resolver->setAllowedValues('type', self::TYPE_SIMPLE);
-        $resolver->setAllowedValues('visibility', [self::VISIBILITY_NOTVISIBLE, self::VISIBILITY_CATALOG, self::VISIBILITY_SEARCH, self::VISIBILITY_CATALOG_SEARCH]);
         $resolver->setAllowedTypes('description', 'string');
         $resolver->setAllowedTypes('short_description', 'string');
         $resolver->setAllowedTypes('weight', ['int', 'float', 'null']);

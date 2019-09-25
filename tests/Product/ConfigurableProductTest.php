@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Lsv\DatapumpTest\Product;
 
 use Lsv\Datapump\Exceptions\SimpleProductMissingKeyException;
+use Lsv\Datapump\Product\AbstractProduct;
+use Lsv\Datapump\Product\UpdateProduct;
 use Lsv\DatapumpTest\CreateSimpleProductTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +25,7 @@ class ConfigurableProductTest extends TestCase
         $product3 = self::createValidSimpleProduct('3');
 
         $product4 = self::createValidConfigurableProduct('4');
-        $product4->setSimpleProducts([$product2, $product3]);
+        $product4->setProducts([$product2, $product3]);
     }
 
     /**
@@ -35,22 +37,24 @@ class ConfigurableProductTest extends TestCase
         $simple2 = self::createValidSimpleProduct('3')->set('color', 'green');
 
         $config = self::createValidConfigurableProduct();
-        $config->setSimpleProducts([$simple1, $simple2]);
+        $config->setProducts([$simple1, $simple2]);
 
         $config->validateProduct();
         $this->assertSame('2,3', $config->getMergedData()['simple_skus']);
+        $this->assertSame(['color'], $config->getConfigurableAttributeKeys());
     }
 
     /**
      * @test
      */
-    public function can_add_simple_products_just_with_sku(): void
+    public function allow_update_product_in_configurable_product(): void
     {
-        $config = self::createValidConfigurableProduct();
-        $config->addSimpleSku('already-added-sku-1');
-        $config->addSimpleSku('already-added-sku-2');
+        $update = (new UpdateProduct())->setSku('2')->setType(AbstractProduct::TYPE_SIMPLE)->set('color', 'blue');
+        $config = self::createValidConfigurableProduct()
+            ->addProduct($update);
 
         $config->validateProduct();
-        $this->assertSame('already-added-sku-1,already-added-sku-2', $config->getMergedData()['simple_skus']);
+
+        $this->assertSame('2', $config->getMergedData()['simple_skus']);
     }
 }

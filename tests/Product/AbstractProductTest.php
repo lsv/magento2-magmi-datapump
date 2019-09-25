@@ -8,6 +8,7 @@ use Generator;
 use Lsv\Datapump\Product\AbstractProduct;
 use Lsv\Datapump\Product\Data\BaseImage;
 use Lsv\Datapump\Product\Data\Category;
+use Lsv\Datapump\Product\UpdateProduct;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,29 +20,105 @@ class AbstractProductTest extends TestCase
      */
     private $product;
 
-    public function gettersDataProvider(): Generator
+    /**
+     * @test
+     */
+    public function store(): void
     {
-        yield ['store'];
-        yield ['storeViewName', 'de', 'store'];
-        yield ['attributeSet', 'value', 'attribute_set'];
-        yield ['type'];
-        yield ['description'];
-        yield ['shortDescription', 'stort description', 'short_description'];
-        yield ['name'];
-        yield ['weight', 15.3];
-        yield ['taxClass', 'tax', 'tax_class_id'];
-        yield ['quantity', 11.3, 'qty'];
+        $this->getters_setters('store');
     }
 
     /**
-     * @dataProvider gettersDataProvider
      * @test
-     *
-     * @param string      $method
-     * @param mixed       $value
-     * @param string|null $fieldName
      */
-    public function getters_setters(string $method, $value = 'value', string $fieldName = null): void
+    public function storeview(): void
+    {
+        $this->getters_setters('storeViewName', 'de', 'store');
+    }
+
+    /**
+     * @test
+     */
+    public function attributeset(): void
+    {
+        $this->getters_setters('attributeSet', 'value', 'attribute_set');
+    }
+
+    /**
+     * @test
+     */
+    public function type(): void
+    {
+        $this->getters_setters('type');
+    }
+
+    /**
+     * @test
+     */
+    public function description(): void
+    {
+        $this->getters_setters('description');
+    }
+
+    /**
+     * @test
+     */
+    public function shortDescription(): void
+    {
+        $this->getters_setters('shortDescription', 'value', 'short_description');
+    }
+
+    /**
+     * @test
+     */
+    public function name(): void
+    {
+        $this->getters_setters('name');
+    }
+
+    /**
+     * @test
+     */
+    public function weight(): void
+    {
+        $this->getters_setters('weight', 15.3);
+    }
+
+    /**
+     * @test
+     */
+    public function taxClass(): void
+    {
+        $this->getters_setters('taxClass', 'tax', 'tax_class_id');
+    }
+
+    /**
+     * @test
+     */
+    public function quantity(): void
+    {
+        $this->getters_setters('quantity', 11.3, 'qty');
+    }
+
+    /**
+     * @test
+     */
+    public function product(): void
+    {
+        $product = (new UpdateProduct())
+            ->setStore('store')
+            ->setAttributeSet('set')
+            ->setShortDescription('short')
+            ->setTaxClass('tax')
+            ->setQuantity(2);
+
+        $this->assertSame('store', $product->getStoreViewName());
+        $this->assertSame('set', $product->getAttributeSet());
+        $this->assertSame('tax', $product->getTaxClass());
+        $this->assertSame(2, $product->getQuantity());
+    }
+
+    protected function getters_setters(string $method, $value = 'value', string $fieldName = null): void
     {
         $setter = 'set'.ucfirst($method);
         $getter = 'get'.ucfirst($method);

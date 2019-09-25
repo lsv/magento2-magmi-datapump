@@ -7,11 +7,12 @@ namespace Lsv\Datapump\Product;
 use Lsv\Datapump\Product\Data\DataInterface;
 use Lsv\Datapump\Utils\DataObject;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionMethod;
 use Symfony\Component\OptionsResolver\Exception\NoSuchOptionException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractProduct
+abstract class AbstractProduct implements ProductInterface
 {
     /**
      * Visibility catalog and search.
@@ -350,7 +351,7 @@ abstract class AbstractProduct
                 }
             }
             // @codeCoverageIgnoreStart
-        } catch (\ReflectionException $exception) {
+        } catch (ReflectionException $exception) {
         }
         // @codeCoverageIgnoreEnd
 
