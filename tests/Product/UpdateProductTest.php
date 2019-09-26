@@ -46,6 +46,20 @@ class UpdateProductTest extends TestCase
         $this->holder->addProduct($product);
     }
 
+    /**
+     * @test
+     */
+    public function allow_array_values(): void
+    {
+        $product = (new UpdateProduct())
+            ->setSku('multiple_values_product')
+            ->setType(AbstractProduct::TYPE_SIMPLE)
+            ->set('multiple_values', ['value1', 'value2']);
+        $product->validateProduct();
+
+        $this->assertSame('value1,value2', $product->getMergedData()['multiple_values']);
+    }
+
     protected function setUp(): void
     {
         $configuration = $this->createMock(Configuration::class);

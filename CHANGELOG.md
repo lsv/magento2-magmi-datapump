@@ -1,3 +1,7 @@
+### v2.0.5
+
+* Allow multiple values in AbstractProduct::set(..., array)
+
 ### v2.0.4
 
 * Deprecated `ConfigurableProduct::addSimpleProduct` use `ConfigurableProduct::addProduct` instead

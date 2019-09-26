@@ -39,6 +39,10 @@ class DataObject
 
     public function set(string $key, $value): void
     {
+        if (is_array($value)) {
+            $value = implode(',', $value);
+        }
+
         $this->data[$key] = $value;
     }
 
