@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lsv\Datapump\Product\Data;
 
-use Lsv\Datapump\Product\AbstractProduct;
+use Lsv\Datapump\Product\ProductInterface;
 
 class ProductRelation implements DataInterface
 {
@@ -16,7 +16,7 @@ class ProductRelation implements DataInterface
     public function __construct(array $products)
     {
         foreach ($products as $product) {
-            if ($product instanceof AbstractProduct) {
+            if ($product instanceof ProductInterface) {
                 $this->relations[] = $product->getSku();
             } else {
                 $this->relations[] = $product;

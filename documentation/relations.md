@@ -17,7 +17,7 @@ The difference between them are that in the cross relation, also the `$products`
 
 ##### Product array
 
-The `$products` needs to be an array of string of SKUs or `AbstractProduct`, or they can be mixed.
+The `$products` needs to be an array of string of SKUs or `ProductInterface`, or they can be mixed.
 
 ```php
 use Lsv\Datapump\Product\Data\ProductCrossRelation;
@@ -29,6 +29,18 @@ $relation = new ProductCrossRelation([
     'my-sku',
     (new UpdateProduct())->setSku('product-another-sku')]
 );
+```
+
+### Cross sell and Up sell
+
+These are just like the relations
+
+```php
+use Lsv\Datapump\Product\Data\ProductUpsellRelation;
+use Lsv\Datapump\Product\Data\ProductCrosssellRelation;
+
+$crosssell = new ProductCrosssellRelation($products);
+$upsell = new ProductUpsellRelation($products);
 ```
 
 ##### Limitations

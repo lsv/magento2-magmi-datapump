@@ -2,6 +2,7 @@
 
 * Allow multiple values in AbstractProduct::set(..., array)
 * New product type - [Downloadable product](documentation/downloadableproduct.md)
+* [Cross sell and Up sell are now possible]((documentation/relations.md))
 
 ### v2.0.4
 
