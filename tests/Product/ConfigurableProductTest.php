@@ -40,7 +40,7 @@ class ConfigurableProductTest extends TestCase
         $config->setProducts([$simple1, $simple2]);
 
         $config->validateProduct();
-        $this->assertSame('2,3', $config->getMergedData()['simple_skus']);
+        $this->assertSame('2,3', $config->getMergedData()['simples_skus']);
         $this->assertSame(['color'], $config->getConfigurableAttributeKeys());
     }
 
@@ -55,7 +55,7 @@ class ConfigurableProductTest extends TestCase
 
         $config->validateProduct();
 
-        $this->assertSame('2', $config->getMergedData()['simple_skus']);
+        $this->assertSame('2', $config->getMergedData()['simples_skus']);
     }
 
     /**
