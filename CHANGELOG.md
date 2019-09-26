@@ -1,6 +1,7 @@
 ### v2.0.5
 
 * Allow multiple values in AbstractProduct::set(..., array)
+* New product type - [Downloadable product](documentation/downloadableproduct.md)
 
 ### v2.0.4
 

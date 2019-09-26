@@ -129,6 +129,7 @@ $holder->addProduct($configurable);
 * [More about the itemHolder](documentation/itemholder.md)
 * [Product relations](documentation/relations.md)
 * [Delete product](documentation/deleteproduct.md)
+* [Downloadable product](documentation/downloadableproduct.md)
 
 ### TODO
 

@@ -39,6 +39,10 @@ abstract class AbstractProduct implements ProductInterface
      * Magento type simple.
      */
     public const TYPE_SIMPLE = 'simple';
+    /**
+     * Magento type simple.
+     */
+    public const TYPE_DOWNLOADABLE = 'downloadable';
 
     /**
      * @var DataObject
