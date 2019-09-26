@@ -57,4 +57,20 @@ class ConfigurableProductTest extends TestCase
 
         $this->assertSame('2', $config->getMergedData()['simple_skus']);
     }
+
+    /**
+     * @test
+     */
+    public function allow_to_manual_set_price_on_configurable_product(): void
+    {
+        $simple1 = self::createValidSimpleProduct('2')->set('color', 'blue')->setPrice(15.30);
+        $simple2 = self::createValidSimpleProduct('3')->set('color', 'green')->setPrice(9.80);
+
+        $config = self::createValidConfigurableProduct();
+        $config->setPrice(11.2);
+        $config->setProducts([$simple1, $simple2]);
+
+        $config->validateProduct();
+        $this->assertSame(11.2, $config->getMergedData()['price']);
+    }
 }

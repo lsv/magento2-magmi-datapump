@@ -139,7 +139,7 @@ class ItemHolderTest extends TestCase
             ->addProduct($product4);
 
         $this->assertCount(4, explode("\n", $this->holder->import(false, '%current%/%max%')));
-        $this->assertStringContainsString('4/4', $this->consoleOutput->fetch());
+        $this->assertStringEndsWith('4/4', $this->consoleOutput->fetch());
     }
 
     /**
@@ -183,6 +183,14 @@ class ItemHolderTest extends TestCase
     /**
      * @test
      */
+    public function can_get_magmi_dir(): void
+    {
+        $this->assertStringEndsWith('src/../vendor/macopedia/magmi2/magmi/conf', $this->holder->getMagmiDir());
+    }
+
+    /**
+     * @test
+     */
     public function will_copy_files_to_magmi_directory(): void
     {
         $configuration = new Configuration(
@@ -218,7 +226,7 @@ class ItemHolderTest extends TestCase
             $this->assertFileExists($dir.'/'.$file);
         }
 
-        $this->assertStringContainsString('my_database_name', file_get_contents($dir.'/magmi.ini'));
+        $this->assertStringStartsWith("[DATABASE]\ndbname=my_database_name", file_get_contents($dir.'/magmi.ini'));
     }
 
     protected function setUp(): void

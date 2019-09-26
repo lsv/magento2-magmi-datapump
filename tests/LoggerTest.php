@@ -73,7 +73,7 @@ class LoggerTest extends TestCase
         $this->logger->log('logged', 'warning');
         rewind($this->stream);
         $content = stream_get_contents($this->stream);
-        $this->assertStringContainsString('log.WARNING: logged', $content);
+        $this->assertNotFalse(strpos($content, 'log.WARNING: logged'));
     }
 
     /**
@@ -84,7 +84,7 @@ class LoggerTest extends TestCase
         $this->logger->log('logged', 'error');
         rewind($this->stream);
         $content = stream_get_contents($this->stream);
-        $this->assertStringContainsString('log.ERROR: logged', $content);
+        $this->assertNotFalse(strpos($content, 'log.ERROR: logged'));
     }
 
     /**
@@ -95,7 +95,7 @@ class LoggerTest extends TestCase
         $this->logger->log('logged', 'info');
         rewind($this->stream);
         $content = stream_get_contents($this->stream);
-        $this->assertStringContainsString('log.INFO: logged', $content);
+        $this->assertNotFalse(strpos($content, 'log.INFO: logged'));
     }
 
     protected function setUp(): void
@@ -115,9 +115,9 @@ class LoggerTest extends TestCase
         $content = stream_get_contents($this->stream);
 
         if ($willWrite) {
-            $this->assertStringContainsString("log.{$realType}: {$type}", $content);
+            $this->assertNotFalse(strpos($content, "log.{$realType}: {$type}"));
         } else {
-            $this->assertStringNotContainsString("log.{$realType}: {$type}", $content);
+            $this->assertFalse(strpos($content, "log.{$realType}: {$type}"));
         }
     }
 }

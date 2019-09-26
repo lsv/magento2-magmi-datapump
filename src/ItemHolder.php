@@ -248,28 +248,29 @@ class ItemHolder
         return $output;
     }
 
+    public function getMagmiDir(): string
+    {
+        $fs = new Filesystem();
+        $dirs = [
+            __DIR__.'/../vendor',
+            __DIR__.'/../../../vendor',
+            __DIR__.'/../../../../vendor',
+        ];
+
+        foreach ($dirs as $dir) {
+            if ($fs->exists($dir.'/macopedia/magmi2/modman')) {
+                return $dir.'/macopedia/magmi2/magmi/conf';
+            }
+        }
+
+        // @codeCoverageIgnoreStart
+        throw new RuntimeException('Could not find magmi directory');
+        // @codeCoverageIgnoreEnd
+    }
+
     private function copyMagmiPluginFiles(Configuration $configuration): void
     {
-        $findMagmiDir = static function (): string {
-            $fs = new Filesystem();
-            $dirs = [
-                __DIR__.'/../vendor',
-                __DIR__.'/../../../vendor',
-                __DIR__.'/../../../../vendor',
-            ];
-
-            foreach ($dirs as $dir) {
-                if ($fs->exists($dir.'/macopedia/magmi2/modman')) {
-                    return $dir.'/macopedia/magmi2/magmi/conf';
-                }
-            }
-
-            // @codeCoverageIgnoreStart
-            throw new RuntimeException('Could not find magmi directory');
-            // @codeCoverageIgnoreEnd
-        };
-
-        $magmiDir = $findMagmiDir();
+        $magmiDir = $this->getMagmiDir();
 
         $fs = new Filesystem();
         if ($files = glob(__DIR__.'/../magmifiles/*')) {

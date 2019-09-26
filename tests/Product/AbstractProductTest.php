@@ -248,7 +248,7 @@ class AbstractProductTest extends TestCase
         $data2 = new Category('categoryName2');
         $this->product->addData($data2);
 
-        $this->assertStringContainsString($data->arrayMergeString(), $this->product->getExtraData()[$data->getKey()]);
+        $this->assertNotContains($data->getKey(), $this->product->getExtraData());
         [$cat1, $cat2] = explode($data->arrayMergeString(), $this->product->getExtraData()[$data->getKey()]);
         $this->assertSame($cat1, 'categoryName::1::1::1');
         $this->assertSame($cat2, 'categoryName2::1::1::1');
@@ -262,7 +262,7 @@ class AbstractProductTest extends TestCase
         $file = new File(__DIR__.'/../_image/image.png');
         $data = new BaseImage($file);
         $this->product->addData($data);
-        $this->assertIsNotArray($this->product->getExtraData()[$data->getKey()]);
+        $this->assertNotContains($data->getKey(), $this->product->getExtraData());
         $this->assertSame('+'.$file->getPathname(), $this->product->getExtraData()[$data->getKey()]);
     }
 

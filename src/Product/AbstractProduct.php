@@ -160,7 +160,7 @@ abstract class AbstractProduct implements ProductInterface
         return $this->get('sku');
     }
 
-    public function setVisibility($visibleInCatalog = true, $searchAble = true): self
+    public function setVisibility(bool $visibleInCatalog = true, bool $searchAble = true): self
     {
         if ($visibleInCatalog && $searchAble) {
             return $this->set('visibility', self::VISIBILITY_CATALOG_SEARCH);

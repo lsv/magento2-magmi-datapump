@@ -10,7 +10,7 @@
          verbose="true">
 
     <php>
-        <server name="SYMFONY_PHPUNIT_VERSION" value="8"/>
+        <server name="SYMFONY_PHPUNIT_VERSION" value="7.4"/>
     </php>
 
     <testsuites>
