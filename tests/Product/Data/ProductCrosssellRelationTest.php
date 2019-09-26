@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lsv\DatapumpTest\Product\Data;
 
 use Lsv\Datapump\Product\Data\ProductCrosssellRelation;
@@ -14,5 +16,4 @@ class ProductCrosssellRelationTest extends TestCase
     {
         $this->assertSame('cs_skus', (new ProductCrosssellRelation([]))->getKey());
     }
-
 }

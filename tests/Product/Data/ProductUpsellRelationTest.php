@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lsv\DatapumpTest\Product\Data;
 
 use Lsv\Datapump\Product\Data\ProductUpsellRelation;

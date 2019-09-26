@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\Exception\NoSuchOptionException;
 
 interface ProductInterface
 {
+    public function getSku(): ?string;
+
     public function beforeValidate(): void;
 
     public function afterValidate(): void;
