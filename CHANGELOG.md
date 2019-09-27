@@ -2,7 +2,9 @@
 
 * Allow multiple values in AbstractProduct::set(..., array)
 * New product type - [Downloadable product](documentation/downloadableproduct.md)
-* [Cross sell and Up sell are now possible]((documentation/relations.md))
+* Added [Cross sell and Up sell are now possible]((documentation/relations.md))
+* Added [Group tier pricing](documentation/tierpricing.md)
+* Added [Quantity tier pricing](documentation/tierpricing.md)
 
 ### v2.0.4
 
