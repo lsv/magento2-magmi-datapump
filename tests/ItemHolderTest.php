@@ -14,6 +14,7 @@ use Lsv\Datapump\Product\SimpleProduct;
 use Lsv\Datapump\Product\UpdateProduct;
 use Magmi_ProductImport_DataPump;
 use Monolog\Handler\StreamHandler;
+use PDOException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
 
@@ -227,6 +228,15 @@ class ItemHolderTest extends TestCase
         }
 
         $this->assertStringStartsWith("[DATABASE]\ndbname=my_database_name", file_get_contents($dir.'/magmi.ini'));
+    }
+
+    /**
+     * @test
+     */
+    public function can_run_raw_sql(): void
+    {
+        $this->expectException(PDOException::class);
+        $this->holder->rawSql('SELECT * FROM table WHERE id = :id', [':id' => 1]);
     }
 
     protected function setUp(): void

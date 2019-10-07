@@ -9,6 +9,7 @@ use Lsv\Datapump\Exceptions\ProductAlreadyAddedException;
 use Lsv\Datapump\Product\AbstractProduct;
 use Lsv\Datapump\Product\ConfigurableProductInterface;
 use Magmi_ProductImport_DataPump;
+use PDO;
 use RuntimeException;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\NullOutput;
@@ -60,9 +61,19 @@ class ItemHolder
     private $output;
 
     /**
+     * @var Configuration
+     */
+    private $configuration;
+
+    /**
      * @var array
      */
     private $productsAdded = [];
+
+    /**
+     * @var PDO|null
+     */
+    private static $pdo;
 
     public function __construct(
         Configuration $configuration,
@@ -73,6 +84,7 @@ class ItemHolder
         $this->magmi = $magmi;
         $this->logger = $logger;
         $this->output = $output ?: new NullOutput();
+        $this->configuration = $configuration;
 
         $this->copyMagmiPluginFiles($configuration);
     }
@@ -228,6 +240,26 @@ class ItemHolder
         $this->afterImport($debug);
 
         return implode("\n", $debug);
+    }
+
+    public function rawSql(string $statement, array $parameters): bool
+    {
+        if (!self::$pdo) {
+            $dsn = sprintf(
+                'mysql:dbname=%s;host=%s',
+                $this->configuration->getDatabaseName(),
+                $this->configuration->getDatabaseHost()
+            );
+            self::$pdo = new PDO(
+                $dsn,
+                $this->configuration->getDatabaseUsername(),
+                $this->configuration->getDatabasePassword()
+            );
+        }
+
+        $stmt = self::$pdo->prepare($statement);
+
+        return $stmt->execute($parameters);
     }
 
     protected function findProductBySku(?string $sku, ?string $store): bool

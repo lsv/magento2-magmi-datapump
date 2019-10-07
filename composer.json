@@ -24,6 +24,7 @@
         }
     ],
     "require": {
+        "ext-pdo": "*",
         "php": "^7.1",
         "symfony/options-resolver": "^4.0",
         "macopedia/magmi2": "dev-feature/config-query",
