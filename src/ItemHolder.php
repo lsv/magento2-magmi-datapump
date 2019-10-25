@@ -284,6 +284,7 @@ class ItemHolder
     {
         $fs = new Filesystem();
         $dirs = [
+            __DIR__.'/../../..',
             __DIR__.'/../vendor',
             __DIR__.'/../../../vendor',
             __DIR__.'/../../../../vendor',
@@ -306,12 +307,15 @@ class ItemHolder
 
         $fs = new Filesystem();
         if ($files = glob(__DIR__.'/../magmifiles/*')) {
+            $alwaysCopy = ['plugins.conf', 'magmi.ini'];
+
             foreach ($files as $file) {
-                if ('plugins.conf' !== basename($file) && $fs->exists($magmiDir.'/'.basename($file))) {
-                    break;
+                $overwrite = false;
+                if (in_array(basename($file), $alwaysCopy, true)) {
+                    $overwrite = true;
                 }
 
-                $fs->copy($file, $magmiDir.'/'.basename($file), true);
+                $fs->copy($file, $magmiDir.'/'.basename($file), $overwrite);
                 if ('magmi.ini' === basename($file)) {
                     $replace = [
                         '<<DB_NAME>>' => $configuration->getDatabaseName(),
