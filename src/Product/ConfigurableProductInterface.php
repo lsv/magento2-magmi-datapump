@@ -26,8 +26,6 @@ interface ConfigurableProductInterface
 
     /**
      * @deprecated
-     *
-     * @param AbstractProduct $product
      */
     public function addSimpleProduct(AbstractProduct $product);
 
@@ -47,8 +45,6 @@ interface ConfigurableProductInterface
 
     /**
      * @deprecated
-     *
-     * @return int
      */
     public function countSimpleProducts(): int;
 }

@@ -95,8 +95,6 @@ class ItemHolder
     }
 
     /**
-     * @param string $mode
-     *
      * @throws NotSupportedMagmiModeException
      */
     public function setMagmiMode(string $mode = self::MAGMI_CREATE_UPDATE): void
@@ -118,18 +116,14 @@ class ItemHolder
     }
 
     /**
-     * @param AbstractProduct $product
-     *
-     * @return self
-     *
      * @throws ProductAlreadyAddedException
      */
-    public function addProduct(AbstractProduct $product): self
+    public function addProduct(AbstractProduct $product, bool $ignoreAlreadyAdded = false): self
     {
         $product->validateProduct();
 
         // Is the SKU already added?
-        if ($this->findProductBySku($product->getSku(), $product->getStore())) {
+        if (!$ignoreAlreadyAdded && $this->findProductBySku($product->getSku(), $product->getStore())) {
             throw new ProductAlreadyAddedException($product->getSku(), $product->getStore());
         }
 
@@ -150,15 +144,13 @@ class ItemHolder
     /**
      * @param AbstractProduct[] $products
      *
-     * @return self
-     *
      * @throws ProductAlreadyAddedException
      */
-    public function setProducts(array $products): self
+    public function setProducts(array $products, bool $ignoreAlreadyAdded = false): self
     {
         $this->reset();
         foreach ($products as $product) {
-            $this->addProduct($product);
+            $this->addProduct($product, $ignoreAlreadyAdded);
         }
 
         return $this;
@@ -188,12 +180,6 @@ class ItemHolder
         $this->products = [];
     }
 
-    /**
-     * @param bool        $dryRun
-     * @param string|null $progressBarFormat
-     *
-     * @return string
-     */
     public function import(bool $dryRun = false, ?string $progressBarFormat = null): string
     {
         $this->beforeImport();

@@ -70,8 +70,6 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
     }
 
     /**
-     * @param AbstractProduct $product
-     *
      * @return ConfigurableProduct
      *
      * @throws SimpleProductMissingKeyException
@@ -124,8 +122,6 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
     /**
      * @deprecated Use `addProduct` instead
      *
-     * @param AbstractProduct $product
-     *
      * @return $this
      *
      * @throws SimpleProductMissingKeyException
@@ -169,8 +165,6 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
 
     /**
      * @deprecated Use `countProducts` instead
-     *
-     * @return int
      */
     public function countSimpleProducts(): int
     {

@@ -26,8 +26,6 @@ class ProductRelation implements DataInterface
 
     /**
      * They key to magmi.
-     *
-     * @return string
      */
     public function getKey(): string
     {
@@ -36,8 +34,6 @@ class ProductRelation implements DataInterface
 
     /**
      * The generated data.
-     *
-     * @return string
      */
     public function getData(): string
     {
@@ -46,8 +42,6 @@ class ProductRelation implements DataInterface
 
     /**
      * Allow multiple of this object on a product.
-     *
-     * @return bool
      */
     public function allowMultiple(): bool
     {
@@ -56,8 +50,6 @@ class ProductRelation implements DataInterface
 
     /**
      * Will only be used if allow multiple is true.
-     *
-     * @return string|null
      */
     public function arrayMergeString(): ?string
     {

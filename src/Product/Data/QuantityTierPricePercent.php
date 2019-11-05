@@ -31,8 +31,6 @@ class QuantityTierPricePercent implements DataInterface
 
     /**
      * They key to magmi.
-     *
-     * @return string
      */
     public function getKey(): string
     {
@@ -41,8 +39,6 @@ class QuantityTierPricePercent implements DataInterface
 
     /**
      * The generated data.
-     *
-     * @return string
      *
      * @throws MissingDataException
      */
@@ -57,8 +53,6 @@ class QuantityTierPricePercent implements DataInterface
 
     /**
      * Allow multiple of this object on a product.
-     *
-     * @return bool
      */
     public function allowMultiple(): bool
     {
@@ -67,8 +61,6 @@ class QuantityTierPricePercent implements DataInterface
 
     /**
      * Will only be used if allow multiple is true.
-     *
-     * @return string|null
      */
     public function arrayMergeString(): ?string
     {

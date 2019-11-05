@@ -102,10 +102,6 @@ abstract class AbstractProduct implements ProductInterface
 
     /**
      * Needs to be the NAME of the store VIEW! - NOT the code!
-     *
-     * @param string $store
-     *
-     * @return self
      */
     public function setStore(string $store): self
     {
@@ -119,10 +115,6 @@ abstract class AbstractProduct implements ProductInterface
 
     /**
      * Needs to be the NAME of the store VIEW! - NOT the code!
-     *
-     * @param string $store
-     *
-     * @return self
      */
     public function setStoreViewName(string $store): self
     {
@@ -240,8 +232,6 @@ abstract class AbstractProduct implements ProductInterface
     }
 
     /**
-     * @param bool $asBool
-     *
      * @return bool|int
      */
     public function getStatus(bool $asBool = false)
@@ -286,9 +276,6 @@ abstract class AbstractProduct implements ProductInterface
 
     /**
      * @param int|float|null $quantity
-     * @param bool           $alwaysInStock
-     *
-     * @return self
      */
     public function setQuantity($quantity, bool $alwaysInStock = false): self
     {

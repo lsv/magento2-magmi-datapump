@@ -8,8 +8,6 @@ class DeleteProduct implements DataInterface
 {
     /**
      * They key to magmi.
-     *
-     * @return string
      */
     public function getKey(): string
     {
@@ -18,8 +16,6 @@ class DeleteProduct implements DataInterface
 
     /**
      * The generated data.
-     *
-     * @return string
      */
     public function getData(): string
     {
@@ -28,8 +24,6 @@ class DeleteProduct implements DataInterface
 
     /**
      * Allow multiple of this object on a product.
-     *
-     * @return bool
      */
     public function allowMultiple(): bool
     {
@@ -38,8 +32,6 @@ class DeleteProduct implements DataInterface
 
     /**
      * Will only be used if allow multiple is true.
-     *
-     * @return string|null
      */
     public function arrayMergeString(): ?string
     {

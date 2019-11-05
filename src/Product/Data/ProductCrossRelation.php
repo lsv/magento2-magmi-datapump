@@ -8,8 +8,6 @@ class ProductCrossRelation extends ProductRelation
 {
     /**
      * They key to magmi.
-     *
-     * @return string
      */
     public function getKey(): string
     {

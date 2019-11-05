@@ -62,12 +62,32 @@ You can add many products at once ***be aware this WILL reset the products befor
 use Lsv\Datapump\ItemHolder;use Lsv\Datapump\Product\SimpleProduct;
 
 $products = [
-    new SimpleProduct(),
-    new SimpleProduct(),
-    new SimpleProduct(),
+    (new SimpleProduct())->setSku(1),
+    (new SimpleProduct())->setSku(2),
+    (new SimpleProduct())->setSku(3),
 ];
 
 $itemHolder = new ItemHolder(...);
 $itemHolder->setProducts($products);
 ```
 
+#### Allow ignoring if a product is already added
+
+Its possible to allow multiple of the same product to be added (product with same SKU and store)
+
+```php
+use Lsv\Datapump\ItemHolder;use Lsv\Datapump\Product\SimpleProduct;
+
+$products = [
+    (new SimpleProduct())->setSku(1),
+    (new SimpleProduct())->setSku(1),
+    (new SimpleProduct())->setSku(1),
+];
+
+$itemHolder = new ItemHolder(...);
+$itemHolder->setProducts($products, true);
+
+// or when adding the product
+
+$itemHolder->addProduct((new SimpleProduct())->setSku(1), true);
+```

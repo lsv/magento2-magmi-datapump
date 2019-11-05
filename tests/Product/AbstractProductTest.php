@@ -195,9 +195,7 @@ class AbstractProductTest extends TestCase
      * @dataProvider dataProvider
      * @test
      *
-     * @param string $method
-     * @param mixed  $value
-     * @param bool   $inDataObject
+     * @param mixed $value
      */
     public function values(string $method, $value, bool $inDataObject): void
     {
@@ -225,10 +223,6 @@ class AbstractProductTest extends TestCase
     /**
      * @dataProvider visibilityProvider
      * @test
-     *
-     * @param bool $catalog
-     * @param bool $searchable
-     * @param int  $result
      */
     public function set_visibility(bool $catalog, bool $searchable, int $result): void
     {

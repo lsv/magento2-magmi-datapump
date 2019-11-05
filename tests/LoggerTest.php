@@ -37,8 +37,7 @@ class LoggerTest extends TestCase
      * @dataProvider debugProvider
      * @test
      *
-     * @param string $type
-     * @param bool   $willWrite
+     * @param bool $willWrite
      */
     public function will_write_to_debug_log(string $type, $willWrite = true): void
     {
@@ -57,8 +56,7 @@ class LoggerTest extends TestCase
      * @dataProvider noticeProvider
      * @test
      *
-     * @param string $type
-     * @param bool   $willWrite
+     * @param bool $willWrite
      */
     public function will_write_to_notice(string $type, $willWrite = true): void
     {

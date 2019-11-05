@@ -81,6 +81,56 @@ class ItemHolderTest extends TestCase
     /**
      * @test
      */
+    public function can_not_set_products_to_queue_with_same_sku(): void
+    {
+        $this->expectException(ProductAlreadyAddedException::class);
+
+        $product1 = $this->createMock(SimpleProduct::class);
+        $product1->method('getSku')->willReturn('1');
+
+        $product2 = $this->createMock(SimpleProduct::class);
+        $product2->method('getSku')->willReturn('1');
+
+        $this->holder->setProducts([$product1, $product2]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_add_same_product_to_queue_if_ignoring_already_added(): void
+    {
+        $product1 = $this->createMock(SimpleProduct::class);
+        $product1->method('getSku')->willReturn('1');
+
+        $product2 = $this->createMock(SimpleProduct::class);
+        $product2->method('getSku')->willReturn('1');
+
+        $this->holder
+            ->addProduct($product1, true)
+            ->addProduct($product2, true);
+
+        $this->assertCount(2, $this->holder->getProducts());
+    }
+
+    /**
+     * @test
+     */
+    public function can_set_products_in_queue_if_ignoring_already_added(): void
+    {
+        $product1 = $this->createMock(SimpleProduct::class);
+        $product1->method('getSku')->willReturn('1');
+
+        $product2 = $this->createMock(SimpleProduct::class);
+        $product2->method('getSku')->willReturn('1');
+
+        $this->holder->setProducts([$product1, $product2], true);
+
+        $this->assertCount(2, $this->holder->getProducts());
+    }
+
+    /**
+     * @test
+     */
     public function can_add_product_with_same_sku_but_different_store(): void
     {
         $product1 = $this->createMock(SimpleProduct::class);
