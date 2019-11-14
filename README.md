@@ -130,7 +130,7 @@ $holder->addProduct($configurable);
 * [Product relations, crosssell and upsell ](documentation/relations.md)
 * [Delete product](documentation/deleteproduct.md)
 * [Downloadable product](documentation/downloadableproduct.md)
-* [Tier pricing](documentation/tierpricing.md)
+* [~~Tier pricing~~](documentation/tierpricing.md)
 * [Update product](documentation/updateproduct.md)
 
 ### TODO

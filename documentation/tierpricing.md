@@ -1,5 +1,9 @@
 ### Tier price
 
+**Tier pricing is not available at this moment.**
+
+**Do not use!**
+
 #### Group tier price
 
 To add a tier pricing for a customer group we can do this

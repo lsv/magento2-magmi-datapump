@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Lsv\Datapump\Product\Data;
 
+use Lsv\Datapump\Exceptions\Exception;
+
 class GroupTierPricePercent implements DataInterface
 {
     /**
@@ -20,6 +22,8 @@ class GroupTierPricePercent implements DataInterface
     {
         $this->customerGroupName = $customerGroupName;
         $this->percent = $percent;
+
+        throw new Exception('Tierpricing is not available at this moment');
     }
 
     /**

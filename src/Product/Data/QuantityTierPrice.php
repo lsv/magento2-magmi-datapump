@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Lsv\Datapump\Product\Data;
 
+use Lsv\Datapump\Exceptions\Exception;
 use Lsv\Datapump\Exceptions\MissingDataException;
 
 class QuantityTierPrice implements DataInterface
@@ -20,6 +21,8 @@ class QuantityTierPrice implements DataInterface
     public function __construct(string $customerGroupName = self::ALL_CUSTOMER_GROUP)
     {
         $this->customerGroupName = $customerGroupName;
+
+        throw new Exception('Tierpricing is not available at this moment');
     }
 
     public function addTier(float $quantity, float $price): self

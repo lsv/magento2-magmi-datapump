@@ -14,6 +14,8 @@ class GroupTierPriceTest extends TestCase
      */
     public function will_set_correct_data(): void
     {
+        $this->markTestSkipped('Tierpricing is not available at this moment');
+
         $tierprice = new GroupTierPrice('group1', 15);
         $this->assertSame('tier_price:group1', $tierprice->getKey());
         $this->assertSame('15', $tierprice->getData());

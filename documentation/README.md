@@ -1,0 +1,8 @@
+* [How to add categories to a product](documentation/categories.md)
+* [How to add images to a product](documentation/images.md)
+* [More about the itemHolder](documentation/itemholder.md)
+* [Product relations, crosssell and upsell ](documentation/relations.md)
+* [Delete product](documentation/deleteproduct.md)
+* [Downloadable product](documentation/downloadableproduct.md)
+* [~~Tier pricing~~](documentation/tierpricing.md)
+* [Update product](documentation/updateproduct.md)

@@ -15,6 +15,8 @@ class QuantityTierPriceTest extends TestCase
      */
     public function will_set_correct_data(): void
     {
+        $this->markTestSkipped('Tierpricing is not available at this moment');
+
         $tier = new QuantityTierPrice('group1');
         $tier->addTier(10, 15);
         $tier->addTier(15, 12);
@@ -30,6 +32,8 @@ class QuantityTierPriceTest extends TestCase
      */
     public function will_throw_exception_if_tier_are_not_added(): void
     {
+        $this->markTestSkipped('Tierpricing is not available at this moment');
+
         $this->expectException(MissingDataException::class);
 
         $tier = new QuantityTierPrice('group1');
