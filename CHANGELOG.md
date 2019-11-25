@@ -1,3 +1,10 @@
+### v3.0
+
+* Adding possibility to add magmi indexer, is now turned off by default (breaking change)
+* Adding magmi with a new pack, so its not needed to add the extra composer repository anymore
+* Removed composer.lock
+* Removed deprecations from v2.0.4
+
 ### v2.0.5
 
 * Allow multiple values in AbstractProduct::set(..., array)

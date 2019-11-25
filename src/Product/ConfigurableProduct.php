@@ -119,60 +119,6 @@ class ConfigurableProduct extends AbstractProduct implements ConfigurableProduct
         return count($this->getProducts());
     }
 
-    /**
-     * @deprecated Use `addProduct` instead
-     *
-     * @return $this
-     *
-     * @throws SimpleProductMissingKeyException
-     */
-    public function addSimpleProduct(AbstractProduct $product): self
-    {
-        @trigger_error('Use `addProduct` instead', E_USER_DEPRECATED);
-
-        $this->addProduct($product);
-
-        return $this;
-    }
-
-    /**
-     * @deprecated Use `getProducts` instead
-     *
-     * @return AbstractProduct[]
-     */
-    public function getSimpleProducts(): array
-    {
-        @trigger_error('Use `getProducts` instead', E_USER_DEPRECATED);
-
-        return $this->getProducts();
-    }
-
-    /**
-     * @deprecated Use `setProducts` instead
-     *
-     * @param AbstractProduct[] $products
-     *
-     * @return ConfigurableProduct
-     *
-     * @throws SimpleProductMissingKeyException
-     */
-    public function setSimpleProducts(array $products): self
-    {
-        @trigger_error('Use `setProducts` instead', E_USER_DEPRECATED);
-
-        return $this->setProducts($products);
-    }
-
-    /**
-     * @deprecated Use `countProducts` instead
-     */
-    public function countSimpleProducts(): int
-    {
-        @trigger_error('Use `countProducts` instead', E_USER_DEPRECATED);
-
-        return $this->countProducts();
-    }
-
     public function beforeValidate(): void
     {
         // Find lowest price
