@@ -8,7 +8,8 @@ php:
 before_script:
     - echo 'date.timezone = "Europe/Copenhagen"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
     - travis_retry composer self-update
-    - travis_retry composer install --no-interaction
+    - travis_retry composer clearcache
+    - travis_retry composer install --no-interaction --prefer-source
 
 script:
     - composer test
