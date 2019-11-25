@@ -17,6 +17,7 @@ use Monolog\Handler\StreamHandler;
 use PDOException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\NullOutput;
 
 class ItemHolderTest extends TestCase
 {
@@ -271,12 +272,13 @@ class ItemHolderTest extends TestCase
             $this->assertFileNotExists($dir.'/'.$file);
         }
 
-        new ItemHolder($configuration, $logger, $magmi);
+        new ItemHolder($configuration, $logger, $magmi, new NullOutput(), false);
 
         foreach ($files as $file) {
             $this->assertFileExists($dir.'/'.$file);
         }
 
+        $this->assertNotContains('ItemIndexer', file_get_contents($dir.'/plugins.conf'));
         $this->assertStringStartsWith("[DATABASE]\ndbname=my_database_name", file_get_contents($dir.'/magmi.ini'));
     }
 

@@ -79,14 +79,15 @@ class ItemHolder
         Configuration $configuration,
         Logger $logger,
         Magmi_ProductImport_DataPump $magmi,
-        OutputInterface $output = null
+        OutputInterface $output = null,
+        bool $useMagmiIndexer = false
     ) {
         $this->magmi = $magmi;
         $this->logger = $logger;
         $this->output = $output ?: new NullOutput();
         $this->configuration = $configuration;
 
-        $this->copyMagmiPluginFiles($configuration);
+        $this->copyMagmiPluginFiles($configuration, $useMagmiIndexer);
     }
 
     public function getMagmiMode(): string
@@ -116,6 +117,8 @@ class ItemHolder
     }
 
     /**
+     * @return ItemHolder
+     *
      * @throws ProductAlreadyAddedException
      */
     public function addProduct(AbstractProduct $product, bool $ignoreAlreadyAdded = false): self
@@ -143,6 +146,8 @@ class ItemHolder
 
     /**
      * @param AbstractProduct[] $products
+     *
+     * @return ItemHolder
      *
      * @throws ProductAlreadyAddedException
      */
@@ -287,7 +292,7 @@ class ItemHolder
         // @codeCoverageIgnoreEnd
     }
 
-    private function copyMagmiPluginFiles(Configuration $configuration): void
+    private function copyMagmiPluginFiles(Configuration $configuration, bool $useMagmiIndexer): void
     {
         $magmiDir = $this->getMagmiDir();
 
@@ -297,11 +302,20 @@ class ItemHolder
 
             foreach ($files as $file) {
                 $overwrite = false;
+                $replace = [];
+
                 if (in_array(basename($file), $alwaysCopy, true)) {
                     $overwrite = true;
                 }
 
                 $fs->copy($file, $magmiDir.'/'.basename($file), $overwrite);
+
+                if (!$useMagmiIndexer && 'plugins.conf' === basename($file)) {
+                    $replace = [
+                        'ItemIndexer,' => '',
+                    ];
+                }
+
                 if ('magmi.ini' === basename($file)) {
                     $replace = [
                         '<<DB_NAME>>' => $configuration->getDatabaseName(),
@@ -310,13 +324,17 @@ class ItemHolder
                         '<<DB_PASSWORD>>' => $configuration->getDatabasePassword(),
                         '<<MAGENTO_BASEDIR>>' => $configuration->getMagentoDirectory(),
                     ];
+                }
 
-                    if ($content = file_get_contents($magmiDir.'/'.basename($file))) {
-                        file_put_contents(
-                            $magmiDir.'/'.basename($file),
-                            str_replace(array_keys($replace), array_values($replace), $content)
-                        );
-                    }
+                if ($replace) {
+                    file_put_contents(
+                        $magmiDir.'/'.basename($file),
+                        str_replace(
+                            array_keys($replace),
+                            array_values($replace),
+                            (string) file_get_contents($magmiDir.'/'.basename($file))
+                        )
+                    );
                 }
             }
         }

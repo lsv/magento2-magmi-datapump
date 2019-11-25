@@ -28,7 +28,7 @@ use Lsv\Datapump\Configuration;
 use Lsv\Datapump\ItemHolder;
 use Lsv\Datapump\Logger;
 use Lsv\Datapump\Product\ConfigurableProduct;use Monolog\Handler\StreamHandler;
-use Lsv\Datapump\Product\SimpleProduct;
+use Lsv\Datapump\Product\SimpleProduct;use Symfony\Component\Console\Output\NullOutput;
 
 // First we need to create a logger, due to Magmi is using a non standardized method, we need to make a little of a work around
 $stream = __DIR__ . '/logfile.log';
@@ -50,7 +50,13 @@ $configuration = new Configuration(
 // Now we can create our ItemHolder which will hold the product we gonna import
 $magmi = \Magmi_DataPumpFactory::getDataPumpInstance('productimport');
 
-$holder = new ItemHolder($configuration, $logger, $magmi);
+// If you want to have progressbar on the import, you can change $output to your OutputInterface 
+$output = new NullOutput();
+
+// As magmi have troubles doing indexing on the fly, I have opted to turn it off, you can turn it with a true
+$useMagmiIndexer = false;
+
+$holder = new ItemHolder($configuration, $logger, $magmi, $output, $useMagmiIndexer);
 
 // Now we can start by adding products to the item holder
 $simpleProduct = (new SimpleProduct())
@@ -102,7 +108,7 @@ $simple1->setTaxClass('tax name');
 $simple1->set('color', 'blue');
 $simple1->set('size', 'L');
 // We need to set color and size on the simple product, because it is required by the configurable product
-$configurable->addSimpleProduct($simple1);
+$configurable->addProduct($simple1);
 
 // And add another simple product to our configurable
 $simple2 = new SimpleProduct();
@@ -113,7 +119,7 @@ $simple2->setPrice(13.99);
 $simple2->setTaxClass('tax name');
 $simple2->set('color', 'green');
 $simple2->set('size', 'M');
-$configurable->addSimpleProduct($simple2);
+$configurable->addProduct($simple2);
 
 // If you already have created the simple products, you can also add them to the configurable product by using
 $configurable->addSimpleSku('already-created-sku-1');
