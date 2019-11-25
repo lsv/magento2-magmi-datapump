@@ -282,8 +282,8 @@ class ItemHolder
         ];
 
         foreach ($dirs as $dir) {
-            if ($fs->exists($dir.'/macopedia/magmi2/modman')) {
-                return $dir.'/macopedia/magmi2/magmi/conf';
+            if ($fs->exists($dir.'/lsv/magmi2/magmi/conf/magmi.ini.default')) {
+                return $dir.'/lsv/magmi2/magmi/conf';
             }
         }
 

@@ -23,28 +23,4 @@ interface ConfigurableProductInterface
     public function getProducts(): array;
 
     public function countProducts(): int;
-
-    /**
-     * @deprecated
-     */
-    public function addSimpleProduct(AbstractProduct $product);
-
-    /**
-     * @deprecated
-     *
-     * @return AbstractProduct[]
-     */
-    public function getSimpleProducts(): array;
-
-    /**
-     * @deprecated
-     *
-     * @param AbstractProduct[] $products
-     */
-    public function setSimpleProducts(array $products);
-
-    /**
-     * @deprecated
-     */
-    public function countSimpleProducts(): int;
 }

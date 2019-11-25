@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 $files = [
-    'macopedia/magmi2/magmi/inc/magmi_loggers.php',
-    'macopedia/magmi2/magmi/engines/magmi_productimportengine.php',
-    'macopedia/magmi2/magmi/integration/inc/productimport_datapump.php',
-    'macopedia/magmi2/magmi/integration/inc/magmi_datapump.php',
+    'lsv/magmi2/magmi/inc/magmi_loggers.php',
+    'lsv/magmi2/magmi/engines/magmi_productimportengine.php',
+    'lsv/magmi2/magmi/integration/inc/productimport_datapump.php',
+    'lsv/magmi2/magmi/integration/inc/magmi_datapump.php',
 ];
 
 $dirs = [
