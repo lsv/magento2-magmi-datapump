@@ -6,19 +6,6 @@ Using object oriented methods to use with [Magmi](https://github.com/macopedia/m
 
 `composer require lsv/magento2-magmi-dump`
 
-At the moment I have made some changes to the magmi repositories, which has not been accepted yet, so you will need to add
-
-```json
-"repositories": [
-    {
-        "type": "git",
-        "url": "git@github.com:lsv/magmi-m2.git"
-    }
-]
-``` 
-
-to your composer.json
-
 ### Usage
 
 You can see a working magento2 module [here](https://github.com/lsv/magento2-magmi-datapump-magento-module).
