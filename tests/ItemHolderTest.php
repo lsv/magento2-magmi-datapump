@@ -236,7 +236,7 @@ class ItemHolderTest extends TestCase
      */
     public function can_get_magmi_dir(): void
     {
-        $this->assertStringEndsWith('src/../vendor/macopedia/magmi2/magmi/conf', $this->holder->getMagmiDir());
+        $this->assertStringEndsWith('src/../vendor/lsv/magmi2/magmi/conf', $this->holder->getMagmiDir());
     }
 
     /**
@@ -265,7 +265,7 @@ class ItemHolderTest extends TestCase
             'plugins.conf',
         ];
 
-        $dir = __DIR__.'/../vendor/macopedia/magmi2/magmi/conf';
+        $dir = __DIR__.'/../vendor/lsv/magmi2/magmi/conf';
         foreach ($files as $file) {
             @unlink($dir.'/'.$file);
             $this->assertFileNotExists($dir.'/'.$file);
