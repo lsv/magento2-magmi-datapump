@@ -17,12 +17,6 @@
             "Lsv\\Datapump\\": "src"
         }
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:lsv/magmi-m2.git"
-        }
-    ],
     "require": {
         "ext-pdo": "*",
         "php": "^7.1",
